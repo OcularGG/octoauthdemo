@@ -6,9 +6,20 @@
     <meta name="description" content="OCULAR - Where vision meets innovation">
     <title>OCULAR</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
+        <!-- Mobile menu button (hamburger) -->
+        <button class="mobile-menu-toggle">
+            <span class="hamburger-icon">
+                <span class="line"></span>
+                <span class="line"></span>
+                <span class="line"></span>
+            </span>
+        </button>
+        
         <!-- Navigation Sidebar: Contains the logo and main navigation menu -->
         <nav class="sidebar">
             <div class="logo">
@@ -16,10 +27,7 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <!-- Other navigation links removed as requested -->
             </ul>
         </nav>
         
@@ -27,36 +35,77 @@
         <main class="content">
             <div class="slideshow-container">
                 <div class="slides">
-                    <!-- Slide 1: Nature Theme -->
+                    <!-- Slide 1 -->
                     <div class="slide fade">
-                        <img src="https://source.unsplash.com/random/1200x800/?nature" alt="Nature">
+                        <img src="https://wallpapercave.com/wp/wp4224345.jpg" alt="OCULAR Wallpaper 1">
                         <div class="text-overlay">
                             OCULAR
                             <div class="tagline-container">
                                 <span class="static-text">This is where </span>
-                                <span class="changing-text"></span>
+                                <div class="changing-text-container">
+                                    <span class="changing-text active"></span>
+                                    <span class="changing-text next"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Slide 2: City Theme -->
+                    
+                    <!-- Slide 2 -->
                     <div class="slide fade">
-                        <img src="https://source.unsplash.com/random/1200x800/?city" alt="City">
+                        <img src="https://wallpapercave.com/wp/wp4224348.jpg" alt="OCULAR Wallpaper 2">
                         <div class="text-overlay">
                             OCULAR
                             <div class="tagline-container">
                                 <span class="static-text">This is where </span>
-                                <span class="changing-text"></span>
+                                <div class="changing-text-container">
+                                    <span class="changing-text active"></span>
+                                    <span class="changing-text next"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Slide 3: Technology Theme -->
+                    
+                    <!-- Slide 3 -->
                     <div class="slide fade">
-                        <img src="https://source.unsplash.com/random/1200x800/?technology" alt="Technology">
+                        <img src="https://wallpapercave.com/wp/wp4224345.jpg" alt="OCULAR Wallpaper 3">
                         <div class="text-overlay">
                             OCULAR
                             <div class="tagline-container">
                                 <span class="static-text">This is where </span>
-                                <span class="changing-text"></span>
+                                <div class="changing-text-container">
+                                    <span class="changing-text active"></span>
+                                    <span class="changing-text next"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4 -->
+                    <div class="slide fade">
+                        <img src="https://wallpapercave.com/wp/wp4224355.jpg" alt="OCULAR Wallpaper 4">
+                        <div class="text-overlay">
+                            OCULAR
+                            <div class="tagline-container">
+                                <span class="static-text">This is where </span>
+                                <div class="changing-text-container">
+                                    <span class="changing-text active"></span>
+                                    <span class="changing-text next"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 5 -->
+                    <div class="slide fade">
+                        <img src="https://wallpapercave.com/wp/wp4224362.jpg" alt="OCULAR Wallpaper 5">
+                        <div class="text-overlay">
+                            OCULAR
+                            <div class="tagline-container">
+                                <span class="static-text">This is where </span>
+                                <div class="changing-text-container">
+                                    <span class="changing-text active"></span>
+                                    <span class="changing-text next"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -67,8 +116,23 @@
                     <span class="dot" onclick="currentSlide(1)"></span>
                     <span class="dot" onclick="currentSlide(2)"></span>
                     <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
                 </div>
             </div>
+            
+            <!-- Footer with social media icons -->
+            <footer class="footer">
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitch"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                </div>
+                <div class="copyright">
+                    &copy; 2023 OCULAR
+                </div>
+            </footer>
         </main>
     </div>
     

@@ -5,6 +5,7 @@
  * 1. Image slideshow functionality with automatic advancement
  * 2. Dynamic text changing with color effects
  * 3. Navigation controls for the slideshow
+ * 4. Mobile responsiveness features
  */
 
 // Variables to keep track of the slideshow
@@ -32,6 +33,7 @@ const phrases = [
  * - Sets up the slideshow
  * - Configures automatic slide advancement
  * - Starts the text changing animation
+ * - Sets up mobile menu functionality
  */
 document.addEventListener('DOMContentLoaded', function() {
     // Display the initial slide
@@ -44,6 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize the changing text effect
     startChangingText();
+    
+    // Set up mobile menu toggle
+    setupMobileMenu();
 });
 
 /**
@@ -110,35 +115,89 @@ function getRandomColor() {
 }
 
 /**
- * Animate the changing text with fade effects and color changes
- * - Updates text every 3 seconds
- * - Applies a fade out/in transition
- * - Changes color with each update
+ * Animate the changing text with smooth crossfade effects and color changes
+ * - Updates text every 3 seconds using a crossfade between two elements
+ * - Prevents layout shifts by using absolute positioning
+ * - Avoids flickering by alternating between active and next elements
  */
 function startChangingText() {
-    const changingTextElements = document.querySelectorAll('.changing-text');
+    const slides = document.querySelectorAll('.slide');
     let currentPhraseIndex = 0;
     
-    // Set initial text and color
-    changingTextElements.forEach(element => {
-        element.textContent = phrases[0];
-        element.style.color = getRandomColor();
+    // Initialize all slides with the first phrase
+    slides.forEach(slide => {
+        const activeText = slide.querySelector('.changing-text.active');
+        const nextText = slide.querySelector('.changing-text.next');
+        
+        if (activeText && nextText) {
+            activeText.textContent = phrases[0];
+            activeText.style.color = getRandomColor();
+            nextText.textContent = phrases[0];
+            nextText.style.color = getRandomColor();
+        }
     });
     
-    // Change text and color every 3 seconds
+    // Change text and color every 3 seconds with crossfade
     setInterval(function() {
+        // Get the next phrase index
         currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+        const newPhrase = phrases[currentPhraseIndex];
+        const newColor = getRandomColor();
         
-        changingTextElements.forEach(element => {
-            // Apply fade-out effect
-            element.style.opacity = 0;
+        // Update all slides
+        slides.forEach(slide => {
+            // Get the active and next text elements
+            const activeText = slide.querySelector('.changing-text.active');
+            const nextText = slide.querySelector('.changing-text.next');
             
-            // Change text and color after slight delay (300ms)
-            setTimeout(function() {
-                element.textContent = phrases[currentPhraseIndex];
-                element.style.color = getRandomColor();
-                element.style.opacity = 1;
-            }, 300);
+            if (activeText && nextText) {
+                // Set up the next text before fading
+                nextText.textContent = newPhrase;
+                nextText.style.color = newColor;
+                
+                // Start crossfade
+                activeText.classList.remove('active');
+                activeText.classList.add('next');
+                nextText.classList.remove('next');
+                nextText.classList.add('active');
+            }
         });
     }, 3000);
+}
+
+/**
+ * Set up the mobile menu toggle functionality
+ * - Controls the sidebar visibility on mobile devices
+ * - Handles click events for the hamburger button
+ */
+function setupMobileMenu() {
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    
+    if (mobileMenuToggle && sidebar) {
+        mobileMenuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on the main content area
+        content.addEventListener('click', function() {
+            if (sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                mobileMenuToggle.classList.remove('active');
+            }
+        });
+        
+        // Close menu when clicking a menu link (for mobile)
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    mobileMenuToggle.classList.remove('active');
+                }
+            });
+        });
+    }
 }

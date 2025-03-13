@@ -74,7 +74,7 @@ body {
 }
 
 .slideshow-container {
-    height: 100%;
+    height: calc(100% - 80px); /* Adjust height to make room for footer */
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -112,6 +112,7 @@ body {
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
     letter-spacing: 5px;
     text-align: center;
+    width: 80%; /* Constrain width to prevent layout shifts */
 }
 
 .tagline-container {
@@ -119,15 +120,39 @@ body {
     margin-top: 20px;
     font-weight: 400;
     letter-spacing: 1px;
+    position: relative; /* For proper positioning of changing text */
 }
 
 .static-text {
     color: white;
 }
 
+/* Improved changing text container */
+.changing-text-container {
+    display: inline-block;
+    position: relative;
+    min-width: 200px; /* Fixed minimum width to prevent layout shifts */
+    min-height: 2rem; /* Fixed minimum height */
+    text-align: left;
+}
+
 .changing-text {
+    position: absolute;
+    top: 0;
+    left: 0;
     font-weight: 600;
-    transition: color 0.5s ease; /* Smooth color transition for changing text */
+    opacity: 0;
+    transition: opacity 0.8s ease, color 0.8s ease;
+}
+
+.changing-text.active {
+    opacity: 1;
+    z-index: 2;
+}
+
+.changing-text.next {
+    opacity: 0;
+    z-index: 1;
 }
 
 /* Navigation dots for slideshow */
@@ -165,6 +190,40 @@ body {
     to {opacity: 1}
 }
 
+/* ===== FOOTER STYLES ===== */
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    z-index: 5;
+}
+
+.social-icons {
+    margin-bottom: 15px;
+}
+
+.social-icon {
+    color: white;
+    font-size: 24px;
+    margin: 0 12px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-block;
+}
+
+.social-icon:hover {
+    color: #00bcd4; /* Cyan highlight color on hover */
+    transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+.copyright {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 /* Adjustments for tablet and mobile devices */
 @media screen and (max-width: 768px) {
@@ -180,5 +239,211 @@ body {
     }
     .tagline-container {
         font-size: 1.4rem;
+    }
+    .social-icon {
+        font-size: 20px;
+        margin: 0 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}    }        pointer-events: auto;        visibility: visible;        opacity: 1;    .sidebar.active + .content::before {@media screen and (max-width: 650px) {}    pointer-events: none;    transition: opacity 0.3s ease, visibility 0.3s ease;    visibility: hidden;    opacity: 0;    z-index: 5;    background-color: rgba(0, 0, 0, 0.5);    bottom: 0;    right: 0;    left: 0;    top: 0;    position: fixed;    content: '';.content::before {/* Add a dark overlay when mobile menu is active */}    transform: translateY(-8px) rotate(-45deg);.mobile-menu-toggle.active .hamburger-icon .line:nth-child(3) {}    opacity: 0;.mobile-menu-toggle.active .hamburger-icon .line:nth-child(2) {}    transform: translateY(8px) rotate(45deg);.mobile-menu-toggle.active .hamburger-icon .line:nth-child(1) {/* Mobile menu toggle animation *//* Add to the existing CSS file after the .hamburger-icon .line style *//* ===== MOBILE MENU STYLES ===== */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+}
+
+.hamburger-icon {
+    width: 30px;
+    height: 20px;
+    position: relative;
+    display: block;
+}
+
+.hamburger-icon .line {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+/* Tablet devices */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 30%; /* Wider sidebar on smaller screens */
+    }
+    
+    .content {
+        width: 70%;
+        margin-left: 30%;
+    }
+    
+    .text-overlay {
+        font-size: 3.5rem; /* Smaller text on smaller screens */
+        width: 90%;
+    }
+    
+    .tagline-container {
+        font-size: 1.4rem;
+    }
+    
+    .changing-text-container {
+        min-width: 180px;
+    }
+    
+    .social-icon {
+        font-size: 20px;
+        margin: 0 10px;
+    }
+    
+    .dot {
+        height: 12px;
+        width: 12px;
+    }
+}
+
+/* Mobile devices - landscape */
+@media screen and (max-width: 650px) {
+    .mobile-menu-toggle {
+        display: block; /* Show hamburger menu */
+    }
+    
+    .sidebar {
+        width: 70%;
+        left: -70%; /* Hide sidebar offscreen */
+        transition: left 0.3s ease;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sidebar.active {
+        left: 0; /* Show sidebar when active */
+    }
+    
+    .content {
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    .text-overlay {
+        font-size: 3rem;
+    }
+    
+    .footer {
+        padding: 15px 10px;
+    }
+    
+    .dots-container {
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+/* Mobile devices - portrait */
+@media screen and (max-width: 480px) {
+    .text-overlay {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .tagline-container {
+        font-size: 1.2rem;
+        margin-top: 15px;
+    }
+    
+    .changing-text-container {
+        min-width: 160px;
+    }
+    
+    .dot {
+        height: 10px;
+        width: 10px;
+        margin: 0 3px;
+    }
+    
+    .social-icon {
+        font-size: 18px;
+        margin: 0 8px;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+    
+    .nav-menu a {
+        font-size: 16px;
+        padding: 8px;
+    }
+}
+
+/* Very small devices */
+@media screen and (max-width: 350px) {
+    .text-overlay {
+        font-size: 2rem;
+    }
+    
+    .tagline-container {
+        font-size: 1rem;
+    }
+    
+    .changing-text-container {
+        min-width: 140px;
+    }
+    
+    .social-icons {
+        margin-bottom: 10px;
+    }
+    
+    .copyright {
+        font-size: 12px;
     }
 }
