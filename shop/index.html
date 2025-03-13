@@ -8,67 +8,6 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="shop-styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Critical inline styles to force layout -->
-    <style>
-      /* Force narrow sidebar */
-      .sidebar {
-        width: 7.5% !important;
-        background-color: #222 !important;
-      }
-      
-      /* Force content width */
-      .content {
-        width: 92.5% !important;
-        margin-left: 7.5% !important;
-      }
-      
-      /* Ensure footer visibility */
-      .footer {
-        position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        background-color: rgba(0, 0, 0, 0.7) !important;
-        color: white !important;
-        z-index: 1000 !important;
-        padding: 15px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-      }
-      
-      .social-icons {
-        display: flex !important;
-        justify-content: center !important;
-        margin-bottom: 10px !important;
-      }
-      
-      .social-icon {
-        color: white !important;
-        font-size: 24px !important;
-        margin: 0 12px !important;
-      }
-      
-      .copyright {
-        color: white !important;
-        font-size: 14px !important;
-      }
-      
-      @media (max-width: 650px) {
-        .sidebar {
-          width: 40% !important;
-          left: -40% !important;
-        }
-        .content {
-          width: 100% !important;
-          margin-left: 0 !important;
-        }
-        .sidebar.active {
-          left: 0 !important;
-        }
-      }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -81,15 +20,34 @@
             </span>
         </button>
         
-        <!-- Navigation Sidebar -->
+        <!-- Navigation Sidebar with footer -->
         <nav class="sidebar">
-            <div class="logo">
-                <h1>OCULAR</h1>
+            <div class="sidebar-content">
+                <!-- Logo Image -->
+                <div class="logo">
+                    <img src="https://i.imgur.com/2vsdAdd.png" alt="OCULAR Logo">
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="#" class="active">Shop</a></li>
+                    <li><a href="#privacy">Privacy Policy</a></li>
+                    <li><a href="#terms">Terms of Service</a></li>
+                    <li><a href="#acknowledgements">Acknowledgements</a></li>
+                </ul>
+                
+                <!-- Sidebar footer -->
+                <div class="sidebar-footer">
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitch"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    </div>
+                    <div class="copyright">
+                        &copy; 2023 OCULAR
+                    </div>
+                </div>
             </div>
-            <ul class="nav-menu">
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="#" class="active">Shop</a></li>
-            </ul>
         </nav>
         
         <!-- Main Content Area -->
@@ -104,19 +62,6 @@
                 
                 <div id="products-grid" class="products-grid"></div>
             </div>
-            
-            <!-- Footer with inline styles for guaranteed display -->
-            <footer class="footer" style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(0,0,0,0.7); padding: 15px; z-index: 1000; text-align: center;">
-                <div class="social-icons" style="display: flex; justify-content: center; margin-bottom: 10px;">
-                    <a href="#" class="social-icon" style="color: white; font-size: 24px; margin: 0 12px;"><i class="fab fa-discord"></i></a>
-                    <a href="#" class="social-icon" style="color: white; font-size: 24px; margin: 0 12px;"><i class="fab fa-twitch"></i></a>
-                    <a href="#" class="social-icon" style="color: white; font-size: 24px; margin: 0 12px;"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="social-icon" style="color: white; font-size: 24px; margin: 0 12px;"><i class="fab fa-github"></i></a>
-                </div>
-                <div class="copyright" style="color: white; font-size: 14px;">
-                    &copy; 2023 OCULAR
-                </div>
-            </footer>
         </main>
     </div>
     

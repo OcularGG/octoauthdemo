@@ -1,11 +1,7 @@
 /**
  * OCULAR Website Stylesheet
  * 
- * This stylesheet controls the appearance of the OCULAR website, including:
- * - Layout structure (sidebar and content)
- * - Navigation styling
- * - Slideshow animations and controls
- * - Responsive design adaptations
+ * This stylesheet controls the appearance of the OCULAR website
  */
 
 /* Reset CSS - Normalize all elements */
@@ -17,81 +13,148 @@
 
 body {
     font-family: Arial, sans-serif;
-    overflow: hidden; /* Prevents scrollbars from appearing */
+    overflow: hidden;
 }
 
-/* Main layout container - Sets up the sidebar and content areas */
+/* Main layout container */
 .container {
     display: flex;
     height: 100vh;
+    position: relative;
+}
+
+/* ===== SIDEBAR TOGGLE BUTTON ===== */
+.sidebar-toggle {
+    position: absolute;
+    left: 7.5%;  /* Matches default sidebar width */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 15;
+    width: 20px;
+    height: 40px;
+    background: #333;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.3s ease;
+}
+
+.sidebar-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-collapsed .sidebar-toggle {
+    left: 30px;  /* Position when sidebar is collapsed */
+}
+
+.sidebar-collapsed .sidebar-toggle i {
+    transform: rotate(180deg);
 }
 
 /* ===== NAVIGATION STYLES ===== */
 .sidebar {
-    width: 7.5%; /* Reduced width for narrower sidebar */
+    width: 250px; /* Fixed width as requested */
     background-color: #222;
     color: white;
     height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
-    padding: 15px 10px; /* Reduced padding for narrower sidebar */
     z-index: 10;
-    box-shadow: none;
-    border-right: none;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    overflow: hidden;
+}
+
+.sidebar-content {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 .logo {
+    width: 100%;
     text-align: center;
-    margin-bottom: 30px; /* Reduced margin */
-    padding-top: 15px; /* Reduced padding */
 }
 
-.logo h1 {
-    font-size: 1.2rem; /* Smaller logo text for narrower sidebar */
+.logo img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .nav-menu {
     list-style: none;
     width: 100%;
-    text-align: center;
+    padding: 20px 0;
+    flex-grow: 0;
 }
 
 .nav-menu li {
-    margin-bottom: 12px; /* Reduced margin */
+    margin-bottom: 10px;
 }
 
 .nav-menu a {
     color: white;
     text-decoration: none;
-    font-size: 0.9rem; /* Smaller font size for menu items */
+    font-size: 16px;
     transition: color 0.3s ease;
     display: block;
-    padding: 8px 5px; /* Reduced padding */
+    padding: 10px 25px;
 }
 
 .nav-menu a:hover {
-    color: #00bcd4; /* Cyan highlight color on hover */
+    color: #0F52BA; /* Sapphire Blue */
 }
 
 .nav-menu a.active {
-    color: #00bcd4;
+    color: #0F52BA; /* Sapphire Blue */
     font-weight: bold;
 }
 
-/* ===== SLIDESHOW & CONTENT STYLES ===== */
-.content {
-    width: 92.5%; /* Increased to match reduced sidebar */
-    margin-left: 7.5%; /* Changed to match sidebar width */
-    height: 100vh;
-    border-left: none;
+/* Sidebar footer with social icons */
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 0 15px;
 }
 
+.social-icons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.social-icon {
+    color: white;
+    font-size: 22px;
+    margin: 0 10px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon:hover {
+    color: #0F52BA; /* Sapphire Blue */
+    transform: scale(1.2);
+}
+
+.content {
+    width: calc(100% - 250px); /* Adjust for sidebar width */
+    margin-left: 250px;
+    height: 100vh;
+}
+
+/* ===== SLIDESHOW STYLES ===== */
 .slideshow-container {
-    height: calc(100% - 80px); /* Adjust height to make room for footer */
+    height: 100%;
     width: 100%;
     position: relative;
     overflow: hidden;
@@ -108,16 +171,16 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    display: none; /* Hidden by default, shown via JS */
+    display: none;
 }
 
 .slide img {
     height: 100%;
     width: 100%;
-    object-fit: cover; /* Ensures images cover the entire slide area */
+    object-fit: cover; /* Ensures images cover without distortion */
 }
 
-/* Text overlay styling - Centers text on top of slideshow images */
+/* Text overlay styling */
 .text-overlay {
     position: absolute;
     top: 50%;
@@ -126,10 +189,10 @@ body {
     font-size: 5rem;
     font-weight: bold;
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
     letter-spacing: 5px;
     text-align: center;
-    width: 80%; /* Constrain width to prevent layout shifts */
+    width: 80%;
 }
 
 .tagline-container {
@@ -137,19 +200,19 @@ body {
     margin-top: 20px;
     font-weight: 400;
     letter-spacing: 1px;
-    position: relative; /* For proper positioning of changing text */
+    position: relative;
 }
 
 .static-text {
     color: white;
 }
 
-/* Improved changing text container */
+/* Changing text container */
 .changing-text-container {
     display: inline-block;
     position: relative;
-    min-width: 200px; /* Fixed minimum width to prevent layout shifts */
-    min-height: 2rem; /* Fixed minimum height */
+    min-width: 200px;
+    min-height: 2rem;
     text-align: left;
 }
 
@@ -172,10 +235,10 @@ body {
     z-index: 1;
 }
 
-/* Navigation dots for slideshow */
+/* Navigation dots */
 .dots-container {
     position: absolute;
-    bottom: 20px;
+    bottom: 100px; /* Positioned higher to make room for CTA button */
     right: 20px;
     display: flex;
     z-index: 2;
@@ -186,14 +249,45 @@ body {
     width: 15px;
     margin: 0 5px;
     background-color: #bbb;
-    border-radius: 0;  /* Square dots */
+    border-radius: 0;
     display: inline-block;
     transition: background-color 0.5s ease;
     cursor: pointer;
 }
 
 .dot.active {
-    background-color: #00bcd4; /* Cyan highlight for active dot */
+    background-color: #0F52BA; /* Sapphire Blue */
+}
+
+/* Call to Action Button */
+.cta-container {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 5;
+}
+
+.cta-button {
+    background-color: #0F52BA; /* Sapphire Blue */
+    color: white;
+    font-size: 20px;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #0D4698; /* Darker Sapphire Blue */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 /* Animation for slide transitions */
@@ -296,7 +390,7 @@ body {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Add a dark overlay when mobile menu is active */
+/* Dark overlay for mobile menu */
 .content::before {
     content: '';
     position: fixed;
@@ -313,84 +407,24 @@ body {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
-/* Tablet devices */
 @media screen and (max-width: 768px) {
-    .sidebar {
-        width: 10%; /* Reduced sidebar width */
-    }
-    
-    .content {
-        width: 90%; /* Increased content width */
-        margin-left: 10%; /* Adjusted margin */
-    }
-    
-    .text-overlay {
-        font-size: 3.5rem; /* Smaller text on smaller screens */
-        width: 90%;
-    }
-    
-    .tagline-container {
-        font-size: 1.4rem;
-    }
-    
-    .changing-text-container {
-        min-width: 180px;
-    }
-    
-    .social-icon {
-        font-size: 20px;
-        margin: 0 10px;
-    }
-    
-    .dot {
-        height: 12px;
-        width: 12px;
-    }
-    
-    .logo h1 {
-        font-size: 1rem; /* Even smaller on tablets */
-    }
-    
-    .nav-menu a {
-        font-size: 0.8rem;
-        padding: 7px 4px;
-    }
-}
-
-/* Mobile devices - landscape */
-@media screen and (max-width: 650px) {
     .mobile-menu-toggle {
-        display: block; /* Show hamburger menu */
+        display: block;
     }
     
     .sidebar {
-        width: 40%; /* Reduced width for mobile */
-        left: -40%; /* Hide sidebar offscreen */
+        width: 80%;
+        left: -80%;
         transition: left 0.3s ease;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-        padding: 15px;
     }
     
     .sidebar.active {
-        left: 0; /* Show sidebar when active */
+        left: 0;
     }
     
     .content {
         width: 100%;
         margin-left: 0;
-    }
-    
-    .text-overlay {
-        font-size: 3rem;
-    }
-    
-    .footer {
-        padding: 15px 10px;
-    }
-    
-    .dots-container {
-        bottom: 15px;
-        right: 15px;
     }
     
     .sidebar.active + .content::before {
@@ -399,13 +433,20 @@ body {
         pointer-events: auto;
     }
     
-    .logo h1 {
-        font-size: 1.5rem; /* Larger again for slide-out menu */
+    .cta-button {
+        width: 80%;
+        max-width: 300px;
+        text-align: center;
+        font-size: 18px;
+        padding: 12px 20px;
     }
     
-    .nav-menu a {
-        font-size: 1rem; /* Larger for slide-out menu */
-        padding: 8px;
+    .text-overlay {
+        font-size: 3.5rem;
+    }
+    
+    .tagline-container {
+        font-size: 1.5rem;
     }
 }
 
@@ -418,53 +459,14 @@ body {
     
     .tagline-container {
         font-size: 1.2rem;
-        margin-top: 15px;
     }
     
-    .changing-text-container {
-        min-width: 160px;
+    .dots-container {
+        bottom: 90px;
     }
     
-    .dot {
-        height: 10px;
-        width: 10px;
-        margin: 0 3px;
-    }
-    
-    .social-icon {
-        font-size: 18px;
-        margin: 0 8px;
-    }
-    
-    .logo h1 {
-        font-size: 1.8rem;
-    }
-    
-    .nav-menu a {
+    .cta-button {
         font-size: 16px;
-        padding: 8px;
-    }
-}
-
-/* Very small devices */
-@media screen and (max-width: 350px) {
-    .text-overlay {
-        font-size: 2rem;
-    }
-    
-    .tagline-container {
-        font-size: 1rem;
-    }
-    
-    .changing-text-container {
-        min-width: 140px;
-    }
-    
-    .social-icons {
-        margin-bottom: 10px;
-    }
-    
-    .copyright {
-        font-size: 12px;
+        padding: 10px 15px;
     }
 }

@@ -6,6 +6,7 @@
  * 2. Dynamic text changing with color effects
  * 3. Navigation controls for the slideshow
  * 4. Mobile responsiveness features
+ * 5. Collapsible sidebar functionality
  */
 
 // Variables to keep track of the slideshow
@@ -49,6 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set up mobile menu toggle
     setupMobileMenu();
+    
+    // Setup collapsible sidebar
+    setupCollapsibleSidebar();
 });
 
 /**
@@ -218,4 +222,30 @@ function setupMobileMenu() {
             document.documentElement.style.setProperty('--sidebar-gap', '0px');
         }
     });
+}
+
+/**
+ * Set up the collapsible sidebar functionality
+ */
+function setupCollapsibleSidebar() {
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const container = document.querySelector('.container');
+    
+    // Check if toggle button exists
+    if (sidebarToggle && container) {
+        // Check for saved state
+        const sidebarState = localStorage.getItem('sidebarCollapsed');
+        if (sidebarState === 'true') {
+            container.classList.add('sidebar-collapsed');
+        }
+        
+        // Add click handler
+        sidebarToggle.addEventListener('click', function() {
+            container.classList.toggle('sidebar-collapsed');
+            
+            // Save state
+            const isCollapsed = container.classList.contains('sidebar-collapsed');
+            localStorage.setItem('sidebarCollapsed', isCollapsed);
+        });
+    }
 }
