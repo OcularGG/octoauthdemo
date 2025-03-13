@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Navigation Styles */
+.sidebar {
+    width: 20%;
+    background-color: #222;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    z-index: 10;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 20px;
+}
+
+.nav-menu {
+    list-style: none;
+}
+
+.nav-menu li {
+    margin-bottom: 15px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 10px;
+}
+
+.nav-menu a:hover {
+    color: #00bcd4;
+}
+
+/* Content & Slideshow Styles */
+.content {
+    width: 80%;
+    margin-left: 20%;
+    height: 100vh;
+}
+
+.slideshow-container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.slides {
+    height: 100%;
+    width: 100%;
+}
+
+.slide {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.slide img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    letter-spacing: 5px;
+    text-align: center;
+}
+
+.tagline-container {
+    font-size: 1.8rem;
+    margin-top: 20px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+.static-text {
+    color: white;
+}
+
+.changing-text {
+    font-weight: 600;
+    transition: color 0.5s ease;
+}
+
+.dots-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    z-index: 2;
+}
+
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 0;  /* Square dots */
+    display: inline-block;
+    transition: background-color 0.5s ease;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #00bcd4;
+}
+
+/* Fade animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: 0.4}
+    to {opacity: 1}
+}
+
+/* Responsive styling */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 30%;
+    }
+    .content {
+        width: 70%;
+        margin-left: 30%;
+    }
+    .text-overlay {
+        font-size: 3rem;
+    }
+    .tagline-container {
+        font-size: 1.4rem;
+    }
+}

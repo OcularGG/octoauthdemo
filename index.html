@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCULAR</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left side navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h1>OCULAR</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Right side content with slideshow -->
+        <main class="content">
+            <div class="slideshow-container">
+                <div class="slides">
+                    <div class="slide fade">
+                        <img src="https://source.unsplash.com/random/1200x800/?nature" alt="Nature">
+                        <div class="text-overlay">
+                            OCULAR
+                            <div class="tagline-container">
+                                <span class="static-text">This is where </span>
+                                <span class="changing-text"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide fade">
+                        <img src="https://source.unsplash.com/random/1200x800/?city" alt="City">
+                        <div class="text-overlay">
+                            OCULAR
+                            <div class="tagline-container">
+                                <span class="static-text">This is where </span>
+                                <span class="changing-text"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide fade">
+                        <img src="https://source.unsplash.com/random/1200x800/?technology" alt="Technology">
+                        <div class="text-overlay">
+                            OCULAR
+                            <div class="tagline-container">
+                                <span class="static-text">This is where </span>
+                                <span class="changing-text"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation dots -->
+                <div class="dots-container">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
