@@ -14,14 +14,12 @@
   # Token is redacted here - set in Netlify UI
   # FOURTHWALL_API_TOKEN = "ptkn_XXXX"
 
-# Redirects - Proxying shop subdirectory to Fourthwall storefront deployment
+# Redirects for SPA and function paths
 [[redirects]]
-  from = "/shop/*"
-  to = "https://your-fourthwall-netlify-app.netlify.app/:splat"
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
   status = 200
-  force = true
 
-# Original redirects
 [[redirects]]
   from = "/*"
   to = "/index.html"
