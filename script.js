@@ -200,4 +200,22 @@ function setupMobileMenu() {
             });
         });
     }
+    
+    // Add check for any potential gap between sidebar and content
+    if (window.innerWidth <= 650) {
+        // For mobile views
+        document.documentElement.style.setProperty('--sidebar-gap', '0px');
+    } else {
+        // Ensure no gap for desktop/tablet views
+        document.documentElement.style.setProperty('--sidebar-gap', '0px');
+    }
+    
+    // Listen for window resize to adjust gaps
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 650) {
+            document.documentElement.style.setProperty('--sidebar-gap', '0px');
+        } else {
+            document.documentElement.style.setProperty('--sidebar-gap', '0px');
+        }
+    });
 }
