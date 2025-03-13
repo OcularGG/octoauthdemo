@@ -1,202 +1,136 @@
 /**
  * OCULAR Shop JavaScript
- * Handles Fourthwall API integration and product display
+ * Handles product display and interactions
  */
 
-// Config for Fourthwall API
-const FOURTHWALL_CONFIG = {
-    apiUrl: 'https://api.fourthwall.com',
-    shopApiPath: '/api/shops/products',
-    productDetailPath: '/api/shops/products'
-};
-
-// Initialize shop functionality when DOM is loaded
+// Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Add styles for error message
-    const style = document.createElement('style');
-    style.textContent = `
-        .error-message {
-            text-align: center;
-            padding: 30px;
-            background-color: #f8f8f8;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .error-message i {
-            font-size: 3rem;
-            color: #ff5252;
-            margin-bottom: 15px;
-        }
-        .error-message p {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .retry-button {
-            background-color: #00bcd4;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .retry-button:hover {
-            background-color: #008ba3;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    fetchProducts();
+  console.log("Shop page loaded");
+  
+  // Initialize shop
+  setupShopPage();
 });
 
-/**
- * Fetch products from Fourthwall API
- * Uses Netlify functions to securely make the API call
- */
+function setupShopPage() {
+  // Ensure mobile menu works on shop page
+  if (window.setupMobileMenu) {
+    window.setupMobileMenu();
+  }
+  
+  // Fetch products
+  fetchProducts();
+}
+
 async function fetchProducts() {
-    try {
-        console.log("Fetching products from Netlify function...");
-        const response = await fetch('/.netlify/functions/get-products');
-        console.log(`Function response status: ${response.status}`);
-        
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`API error: ${errorText}`);
-            throw new Error(`Failed to fetch products: ${response.status}`);
-        }
-        
-        let products = [];
-        try {
-            const data = await response.json();
-            console.log("Response data:", data);
-            
-            if (Array.isArray(data)) {
-                products = data;
-            } else if (data && Array.isArray(data.products)) {
-                products = data.products;
-            } else {
-                console.warn("Unexpected data format:", data);
-            }
-            
-            console.log(`Products received: ${products.length}`);
-        } catch (parseError) {
-            console.error("Error parsing JSON:", parseError);
-            throw new Error("Invalid response format");
-        }
-        
-        displayProducts(products);
-    } catch (error) {
-        console.error('Error fetching products:', error);
-        showError(`Unable to load products. Please try again later. (${error.message})`);
-    }
-}
-
-/**
- * Display products in the grid
- * @param {Array} products - Array of product objects from API
- */
-function displayProducts(products) {
-    const productsGrid = document.getElementById('products-grid');
-    const loadingContainer = document.querySelector('.loading-container');
+  const loadingContainer = document.querySelector('.loading-container');
+  const productsGrid = document.getElementById('products-grid');
+  
+  try {
+    console.log("Fetching products...");
     
-    // Hide loading indicator
-    if (loadingContainer) {
-        loadingContainer.style.display = 'none';
+    // Try loading with timeout to prevent hanging
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    
+    const response = await fetch('/.netlify/functions/get-products', {
+      signal: controller.signal
+    }).catch(err => {
+      console.error("Fetch error:", err);
+      throw new Error("Network error when connecting to API");
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
     }
     
-    // Check if we have products
+    const products = await response.json();
+    console.log(`Received ${products.length} products`);
+    
+    // Hide loader
+    if (loadingContainer) loadingContainer.style.display = 'none';
+    
     if (!products || products.length === 0) {
-        showError('No products found');
-        return;
+      productsGrid.innerHTML = `
+        <div class="no-products">
+          <i class="fas fa-box-open"></i>
+          <p>No products available at this time.</p>
+        </div>
+      `;
+      return;
     }
     
-    // Build product cards
+    // Display products
     products.forEach(product => {
-        const productCard = createProductCard(product);
-        productsGrid.appendChild(productCard);
-    });
-}
-
-/**
- * Create a product card element
- * @param {Object} product - Product data
- * @returns {HTMLElement} - The product card element
- */
-function createProductCard(product) {
-    const card = document.createElement('div');
-    card.className = 'product-card';
-    
-    const imageUrl = product.images && product.images.length > 0 
-        ? product.images[0].url 
-        : 'https://via.placeholder.com/300x300?text=Product+Image';
-    
-    card.innerHTML = `
-        <img src="${imageUrl}" alt="${product.name}" class="product-image">
-        <div class="product-details">
-            <h3 class="product-title">${product.name}</h3>
-            <div class="product-price">${formatPrice(product.price)}</div>
-            <p class="product-description">${truncateText(product.description || 'No description available', 100)}</p>
-            <a href="${product.url}" target="_blank" class="buy-button">View Product</a>
-        </div>
-    `;
-    
-    card.addEventListener('click', (e) => {
-        // Prevent navigation if clicking the button (let button handle its own click)
-        if (e.target.classList.contains('buy-button')) {
-            return;
-        }
-        window.open(product.url, '_blank');
+      const card = createProductCard(product);
+      productsGrid.appendChild(card);
     });
     
-    return card;
-}
-
-/**
- * Format price based on currency
- * @param {Object} price - Price object with amount and currency
- * @returns {String} Formatted price
- */
-function formatPrice(price) {
-    if (!price || !price.amount) return 'Price not available';
+  } catch (error) {
+    console.error("Error:", error);
     
-    const amount = price.amount / 100; // Convert cents to dollars
-    const currency = price.currency || 'USD';
+    // Hide loader
+    if (loadingContainer) loadingContainer.style.display = 'none';
     
-    return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: currency
-    }).format(amount);
-}
-
-/**
- * Truncate text to specified length
- * @param {String} text - Text to truncate
- * @param {Number} maxLength - Maximum length
- * @returns {String} Truncated text
- */
-function truncateText(text, maxLength) {
-    if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength) + '...';
-}
-
-/**
- * Show error message to user
- * @param {String} message - Error message to display
- */
-function showError(message) {
-    const productsGrid = document.getElementById('products-grid');
-    const loadingContainer = document.querySelector('.loading-container');
-    
-    // Hide loading indicator
-    if (loadingContainer) {
-        loadingContainer.style.display = 'none';
-    }
-    
+    // Show error with retry button
     productsGrid.innerHTML = `
-        <div class="error-message">
-            <i class="fas fa-exclamation-circle"></i>
-            <p>${message}</p>
-            <button class="retry-button" onclick="fetchProducts()">Retry</button>
-        </div>
+      <div class="error-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>Unable to load products. Please try again.</p>
+        <button onclick="fetchProducts()" class="retry-button">Retry</button>
+      </div>
     `;
+  }
+}
+
+// Create a product card from product data
+function createProductCard(product) {
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  
+  // Get image URL with fallback
+  const imageUrl = product.images && product.images.length > 0 
+    ? product.images[0].url 
+    : 'https://via.placeholder.com/300x300?text=Product';
+  
+  // Format price with fallback
+  const price = product.price 
+    ? formatPrice(product.price) 
+    : 'Price not available';
+  
+  // Product URL with fallback
+  const productUrl = product.url || '#';
+  
+  // Build card HTML
+  card.innerHTML = `
+    <img src="${imageUrl}" alt="${product.name}" class="product-image">
+    <div class="product-details">
+      <h3 class="product-title">${product.name}</h3>
+      <div class="product-price">${price}</div>
+      <p class="product-description">${truncateText(product.description || 'No description available', 100)}</p>
+      <a href="${productUrl}" target="_blank" class="buy-button">View Product</a>
+    </div>
+  `;
+  
+  return card;
+}
+
+// Format price
+function formatPrice(price) {
+  if (!price || typeof price.amount === 'undefined') return 'Price not available';
+  
+  const amount = price.amount / 100; // Convert cents to dollars
+  const currency = price.currency || 'USD';
+  
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency
+  }).format(amount);
+}
+
+// Truncate text to specified length
+function truncateText(text, maxLength) {
+  if (!text || text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + '...';
 }
