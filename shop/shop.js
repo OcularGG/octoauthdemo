@@ -12,6 +12,40 @@ const FOURTHWALL_CONFIG = {
 
 // Initialize shop functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Add styles for error message
+    const style = document.createElement('style');
+    style.textContent = `
+        .error-message {
+            text-align: center;
+            padding: 30px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .error-message i {
+            font-size: 3rem;
+            color: #ff5252;
+            margin-bottom: 15px;
+        }
+        .error-message p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .retry-button {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .retry-button:hover {
+            background-color: #008ba3;
+        }
+    `;
+    document.head.appendChild(style);
+    
     fetchProducts();
 });
 
@@ -31,8 +65,25 @@ async function fetchProducts() {
             throw new Error(`Failed to fetch products: ${response.status}`);
         }
         
-        const products = await response.json();
-        console.log(`Products received: ${products.length}`);
+        let products = [];
+        try {
+            const data = await response.json();
+            console.log("Response data:", data);
+            
+            if (Array.isArray(data)) {
+                products = data;
+            } else if (data && Array.isArray(data.products)) {
+                products = data.products;
+            } else {
+                console.warn("Unexpected data format:", data);
+            }
+            
+            console.log(`Products received: ${products.length}`);
+        } catch (parseError) {
+            console.error("Error parsing JSON:", parseError);
+            throw new Error("Invalid response format");
+        }
+        
         displayProducts(products);
     } catch (error) {
         console.error('Error fetching products:', error);
@@ -149,42 +200,3 @@ function showError(message) {
         </div>
     `;
 }
-
-// Add styles for the error message
-document.addEventListener('DOMContentLoaded', function() {
-    // Add styles for error message
-    const style = document.createElement('style');
-    style.textContent = `
-        .error-message {
-            text-align: center;
-            padding: 30px;
-            background-color: #f8f8f8;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .error-message i {
-            font-size: 3rem;
-            color: #ff5252;
-            margin-bottom: 15px;
-        }
-        .error-message p {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .retry-button {
-            background-color: #00bcd4;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .retry-button:hover {
-            background-color: #008ba3;
-        }
-    `;
-    document.head.appendChild(style);
-    
-    fetchProducts();
-});

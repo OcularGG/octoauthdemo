@@ -15,8 +15,9 @@ exports.handler = async function(event, context) {
     
     console.log("Making request to Fourthwall API...");
     
-    // Make request to Fourthwall API
-    const response = await fetch('https://api.fourthwall.com/api/shops/products', {
+    // Make request to Fourthwall API with proper endpoint
+    // Note: Using store products endpoint for better compatibility
+    const response = await fetch('https://api.fourthwall.com/api/stores/products', {
       headers: {
         'Authorization': `Bearer ${apiToken}`,
         'Content-Type': 'application/json'
@@ -34,12 +35,14 @@ exports.handler = async function(event, context) {
     const data = await response.json();
     console.log(`Products found: ${data.products ? data.products.length : 0}`);
     
+    // Return a proper array that the frontend can handle
     return {
       statusCode: 200,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify(data.products || [])
+      body: JSON.stringify(Array.isArray(data.products) ? data.products : [])
     };
     
   } catch (error) {
