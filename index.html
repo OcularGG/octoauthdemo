@@ -3,154 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="OCULAR - Where vision meets innovation">
-    <title>OCULAR</title>
+    <title>Homepage</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Font Awesome for social icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Add favicon -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
 </head>
 <body>
-    <div class="container">
-        <!-- Mobile menu button (hamburger) -->
-        <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
-            <span class="hamburger-icon">
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
-            </span>
-        </button>
-        
-        <!-- Navigation Sidebar: Contains the logo and main navigation menu -->
-        <nav class="sidebar">
-            <div class="sidebar-content">
-                <!-- Logo Image -->
-                <div class="logo">
-                    <a href="#home">
-                        <img src="https://i.imgur.com/2vsdAdd.png" alt="OCULAR Logo">
-                    </a>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="#home" class="active">Home</a></li>
-                    <li><a href="/shop/">Shop</a></li>
-                    <li><a href="#privacy">Privacy Policy</a></li>
-                    <li><a href="#terms">Terms of Service</a></li>
-                    <li><a href="#acknowledgements">Acknowledgements</a></li>
-                </ul>
-                
-                <!-- Sidebar footer -->
-                <div class="sidebar-footer">
-                    <div class="social-icons">
-                        <a href="#" class="social-icon" aria-label="Discord"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="social-icon" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
-                        <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                    </div>
-                    <div class="copyright">
-                        &copy; 2023 OCULAR
-                    </div>
-                </div>
-            </div>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Rat Stats</a></li>
+                <li><a href="#">Support Us</a></li>
+            </ul>
         </nav>
-        
-        <!-- Main Content Area: Contains the auto-advancing slideshow with dynamic taglines -->
-        <main class="content">
-            <div class="slideshow-container">
-                <div class="slides">
-                    <!-- Slide 1 -->
-                    <div class="slide fade">
-                        <img src="https://wallpapercave.com/wp/wp4224345.jpg" alt="OCULAR Wallpaper 1">
-                        <div class="text-overlay">
-                            OCULAR
-                            <div class="tagline-container">
-                                <span class="static-text">This is where </span>
-                                <div class="changing-text-container">
-                                    <span class="changing-text active"></span>
-                                    <span class="changing-text next"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 2 -->
-                    <div class="slide fade">
-                        <img src="https://wallpapercave.com/wp/wp4224348.jpg" alt="OCULAR Wallpaper 2">
-                        <div class="text-overlay">
-                            OCULAR
-                            <div class="tagline-container">
-                                <span class="static-text">This is where </span>
-                                <div class="changing-text-container">
-                                    <span class="changing-text active"></span>
-                                    <span class="changing-text next"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 3 -->
-                    <div class="slide fade">
-                        <img src="https://wallpapercave.com/wp/wp4224345.jpg" alt="OCULAR Wallpaper 3">
-                        <div class="text-overlay">
-                            OCULAR
-                            <div class="tagline-container">
-                                <span class="static-text">This is where </span>
-                                <div class="changing-text-container">
-                                    <span class="changing-text active"></span>
-                                    <span class="changing-text next"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 4 -->
-                    <div class="slide fade">
-                        <img src="https://wallpapercave.com/wp/wp4224355.jpg" alt="OCULAR Wallpaper 4">
-                        <div class="text-overlay">
-                            OCULAR
-                            <div class="tagline-container">
-                                <span class="static-text">This is where </span>
-                                <div class="changing-text-container">
-                                    <span class="changing-text active"></span>
-                                    <span class="changing-text next"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 5 -->
-                    <div class="slide fade">
-                        <img src="https://wallpapercave.com/wp/wp4224362.jpg" alt="OCULAR Wallpaper 5">
-                        <div class="text-overlay">
-                            OCULAR
-                            <div class="tagline-container">
-                                <span class="static-text">This is where </span>
-                                <div class="changing-text-container">
-                                    <span class="changing-text active"></span>
-                                    <span class="changing-text next"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Navigation dots for manual slide control -->
-                <div class="dots-container">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                    <span class="dot" onclick="currentSlide(5)"></span>
-                </div>
-                
-                <!-- Call to Action Button -->
-                <div class="cta-container">
-                    <a href="#apply" class="cta-button">APPLY TO OCULAR</a>
-                </div>
-            </div>
-        </main>
+        <div class="footer">
+            <ul>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Acknowledgements</a></li>
+            </ul>
+            <button class="get-fuel">APPLY TO OCULAR</button>
+        </div>
     </div>
-    
+    <div class="main-content">
+        <div class="header">
+            <button class="login">Login</button>
+        </div>
+        <div class="slideshow-container">
+            <div class="slideshow-slide fade">
+                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Space Image 1">
+            </div>
+            <div class="slideshow-slide fade">
+                <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659" alt="Space Image 2">
+            </div>
+            <div class="slideshow-slide fade">
+                <img src="https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0" alt="Space Image 3">
+            </div>
+            <div class="slideshow-slide fade">
+                <img src="https://images.unsplash.com/photo-1447433589675-4aaa569f3e05" alt="Space Image 4">
+            </div>
+            <div class="slideshow-slide fade">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="Space Image 5">
+            </div>
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </div>
+        <div class="hero">
+            <h1>We Have Fuel. You Don't.</h1>
+            <p>Any Questions?</p>
+            <button class="get-fuel">APPLY TO OCULAR</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
