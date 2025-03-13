@@ -1,7 +1,16 @@
+/**
+ * OCULAR Website JavaScript
+ * 
+ * This script controls:
+ * 1. Image slideshow functionality with automatic advancement
+ * 2. Dynamic text changing with color effects
+ * 3. Navigation controls for the slideshow
+ */
+
 // Variables to keep track of the slideshow
 let slideIndex = 1;
 
-// Phrases to cycle through
+// Phrases to cycle through in the changing text component
 const phrases = [
     "the fun is!",
     "strategy meets chaos.",
@@ -18,8 +27,14 @@ const phrases = [
     "fame is earned daily."
 ];
 
-// Initialize the slideshow when the page loads
+/**
+ * Initialize the page when DOM content is fully loaded
+ * - Sets up the slideshow
+ * - Configures automatic slide advancement
+ * - Starts the text changing animation
+ */
 document.addEventListener('DOMContentLoaded', function() {
+    // Display the initial slide
     showSlides(slideIndex);
     
     // Auto advance slides every 5 seconds
@@ -27,25 +42,36 @@ document.addEventListener('DOMContentLoaded', function() {
         plusSlides(1);
     }, 5000);
     
-    // Initialize the changing text
+    // Initialize the changing text effect
     startChangingText();
 });
 
-// Next/previous controls
+/**
+ * Advance the slideshow by n slides
+ * @param {number} n - Number of slides to advance (positive or negative)
+ */
 function plusSlides(n) {
     showSlides(slideIndex += n);
 }
 
-// Thumbnail image controls
+/**
+ * Jump to a specific slide
+ * @param {number} n - Slide number to display
+ */
 function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
+/**
+ * Display the current slide and update navigation dots
+ * @param {number} n - Current slide index
+ */
 function showSlides(n) {
     let i;
     let slides = document.getElementsByClassName("slide");
     let dots = document.getElementsByClassName("dot");
     
+    // Handle wrapping around at the ends of the slideshow
     // Loop back to first slide if at the end
     if (n > slides.length) {
         slideIndex = 1;
@@ -66,12 +92,15 @@ function showSlides(n) {
         dots[i].className = dots[i].className.replace(" active", "");
     }
     
-    // Show current slide and activate corresponding dot
+    // Show the current slide and activate corresponding dot
     slides[slideIndex - 1].style.display = "block";
     dots[slideIndex - 1].className += " active";
 }
 
-// Function to generate random color
+/**
+ * Generate a random color from a predefined palette
+ * @returns {string} A hex color code
+ */
 function getRandomColor() {
     const colors = [
         '#FF5733', '#33FF57', '#3357FF', '#F033FF', '#FF33A6', 
@@ -80,18 +109,23 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
-// Function to change the text and its color
+/**
+ * Animate the changing text with fade effects and color changes
+ * - Updates text every 3 seconds
+ * - Applies a fade out/in transition
+ * - Changes color with each update
+ */
 function startChangingText() {
     const changingTextElements = document.querySelectorAll('.changing-text');
     let currentPhraseIndex = 0;
     
-    // Initial text
+    // Set initial text and color
     changingTextElements.forEach(element => {
         element.textContent = phrases[0];
         element.style.color = getRandomColor();
     });
     
-    // Change text every 3 seconds
+    // Change text and color every 3 seconds
     setInterval(function() {
         currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
         
@@ -99,7 +133,7 @@ function startChangingText() {
             // Apply fade-out effect
             element.style.opacity = 0;
             
-            // Change text and color after slight delay
+            // Change text and color after slight delay (300ms)
             setTimeout(function() {
                 element.textContent = phrases[currentPhraseIndex];
                 element.style.color = getRandomColor();

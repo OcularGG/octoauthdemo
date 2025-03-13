@@ -1,19 +1,27 @@
-# Build settings
+# OCULAR Website - Netlify Configuration
+#
+# This file configures how the site is deployed on Netlify
+# and handles routing/caching settings
+
+# Build settings - Define where the site files are located
 [build]
-  publish = "/"  # The directory to publish (root in this case)
+  publish = "/"  # Publishing from the root directory
   
-# Redirects and headers
+# Redirects - Ensure proper SPA (Single Page Application) behavior
+# This rule redirects all paths to index.html, which is useful for client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
   
-# Cache control for assets
+# Cache control - Improve performance by caching static assets
+# JavaScript files get 1 year (31536000 seconds) of caching
 [[headers]]
   for = "/*.js"
   [headers.values]
     Cache-Control = "public, max-age=31536000"
 
+# CSS files get 1 year of caching
 [[headers]]
   for = "/*.css"
   [headers.values]

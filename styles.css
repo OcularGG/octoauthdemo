@@ -1,3 +1,14 @@
+/**
+ * OCULAR Website Stylesheet
+ * 
+ * This stylesheet controls the appearance of the OCULAR website, including:
+ * - Layout structure (sidebar and content)
+ * - Navigation styling
+ * - Slideshow animations and controls
+ * - Responsive design adaptations
+ */
+
+/* Reset CSS - Normalize all elements */
 * {
     margin: 0;
     padding: 0;
@@ -6,15 +17,16 @@
 
 body {
     font-family: Arial, sans-serif;
-    overflow: hidden;
+    overflow: hidden; /* Prevents scrollbars from appearing */
 }
 
+/* Main layout container - Sets up the sidebar and content areas */
 .container {
     display: flex;
     height: 100vh;
 }
 
-/* Navigation Styles */
+/* ===== NAVIGATION STYLES ===== */
 .sidebar {
     width: 20%;
     background-color: #222;
@@ -24,7 +36,7 @@ body {
     left: 0;
     top: 0;
     padding: 20px;
-    z-index: 10;
+    z-index: 10; /* Ensures sidebar appears above other content */
 }
 
 .logo {
@@ -45,19 +57,19 @@ body {
     color: white;
     text-decoration: none;
     font-size: 18px;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease; /* Smooth color transition on hover */
     display: block;
     padding: 10px;
 }
 
 .nav-menu a:hover {
-    color: #00bcd4;
+    color: #00bcd4; /* Cyan highlight color on hover */
 }
 
-/* Content & Slideshow Styles */
+/* ===== SLIDESHOW & CONTENT STYLES ===== */
 .content {
     width: 80%;
-    margin-left: 20%;
+    margin-left: 20%; /* Aligns with the sidebar width */
     height: 100vh;
 }
 
@@ -79,15 +91,16 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    display: none;
+    display: none; /* Hidden by default, shown via JS */
 }
 
 .slide img {
     height: 100%;
     width: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Ensures images cover the entire slide area */
 }
 
+/* Text overlay styling - Centers text on top of slideshow images */
 .text-overlay {
     position: absolute;
     top: 50%;
@@ -96,7 +109,7 @@ body {
     font-size: 5rem;
     font-weight: bold;
     color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Text shadow for better visibility */
     letter-spacing: 5px;
     text-align: center;
 }
@@ -114,9 +127,10 @@ body {
 
 .changing-text {
     font-weight: 600;
-    transition: color 0.5s ease;
+    transition: color 0.5s ease; /* Smooth color transition for changing text */
 }
 
+/* Navigation dots for slideshow */
 .dots-container {
     position: absolute;
     bottom: 20px;
@@ -137,10 +151,10 @@ body {
 }
 
 .dot.active {
-    background-color: #00bcd4;
+    background-color: #00bcd4; /* Cyan highlight for active dot */
 }
 
-/* Fade animation */
+/* Animation for slide transitions */
 .fade {
     animation-name: fade;
     animation-duration: 1.5s;
@@ -151,17 +165,18 @@ body {
     to {opacity: 1}
 }
 
-/* Responsive styling */
+/* ===== RESPONSIVE DESIGN ===== */
+/* Adjustments for tablet and mobile devices */
 @media screen and (max-width: 768px) {
     .sidebar {
-        width: 30%;
+        width: 30%; /* Wider sidebar on smaller screens */
     }
     .content {
         width: 70%;
         margin-left: 30%;
     }
     .text-overlay {
-        font-size: 3rem;
+        font-size: 3rem; /* Smaller text on smaller screens */
     }
     .tagline-container {
         font-size: 1.4rem;
