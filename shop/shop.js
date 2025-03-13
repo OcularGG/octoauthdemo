@@ -15,22 +15,54 @@ function setupShopPage() {
   // Ensure mobile menu works on shop page
   if (window.setupMobileMenu) {
     window.setupMobileMenu();
+  } else {
+    console.warn("Mobile menu setup function not available");
+    // Fallback implementation
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    
+    if (mobileMenuToggle && sidebar) {
+      mobileMenuToggle.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        this.classList.toggle('active');
+      });
+    }
   }
+  
+  // Highlight active nav item
+  highlightShopNav();
   
   // Fetch products
   fetchProducts();
+}
+
+// Highlight the shop nav item
+function highlightShopNav() {
+  const navLinks = document.querySelectorAll('.nav-menu a');
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' || 
+        link.getAttribute('href').includes('/shop')) {
+      link.classList.add('active');
+    }
+  });
 }
 
 async function fetchProducts() {
   const loadingContainer = document.querySelector('.loading-container');
   const productsGrid = document.getElementById('products-grid');
   
+  if (!productsGrid) {
+    console.error("Products grid element not found");
+    return;
+  }
+  
   try {
     console.log("Fetching products...");
     
     // Try loading with timeout to prevent hanging
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
     
     const response = await fetch('/.netlify/functions/get-products', {
       signal: controller.signal
@@ -60,6 +92,9 @@ async function fetchProducts() {
       `;
       return;
     }
+    
+    // Clear previous content
+    productsGrid.innerHTML = '';
     
     // Display products
     products.forEach(product => {

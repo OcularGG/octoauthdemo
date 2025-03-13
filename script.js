@@ -11,6 +11,8 @@
 
 // Variables to keep track of the slideshow
 let slideIndex = 1;
+let slideshowPaused = false;
+let slideInterval;
 
 // Phrases to cycle through in the changing text component
 const phrases = [
@@ -41,19 +43,30 @@ document.addEventListener('DOMContentLoaded', function() {
     showSlides(slideIndex);
     
     // Auto advance slides every 5 seconds
-    setInterval(function() {
-        plusSlides(1);
-    }, 5000);
+    startSlideshow();
     
     // Initialize the changing text effect
     startChangingText();
     
     // Set up mobile menu toggle
+    window.setupMobileMenu = setupMobileMenu;
     setupMobileMenu();
     
-    // Setup collapsible sidebar
-    setupCollapsibleSidebar();
+    // Setup active navigation state
+    highlightCurrentPageNav();
 });
+
+/**
+ * Start the automatic slideshow
+ */
+function startSlideshow() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(function() {
+        if (!slideshowPaused) {
+            plusSlides(1);
+        }
+    }, 5000);
+}
 
 /**
  * Advance the slideshow by n slides
@@ -68,7 +81,13 @@ function plusSlides(n) {
  * @param {number} n - Slide number to display
  */
 function currentSlide(n) {
+    slideshowPaused = true;
     showSlides(slideIndex = n);
+    
+    // Resume automatic slideshow after 10 seconds of inactivity
+    setTimeout(function() {
+        slideshowPaused = false;
+    }, 10000);
 }
 
 /**
@@ -179,31 +198,35 @@ function setupMobileMenu() {
     const sidebar = document.querySelector('.sidebar');
     const content = document.querySelector('.content');
     
-    if (mobileMenuToggle && sidebar) {
-        mobileMenuToggle.addEventListener('click', function() {
-            sidebar.classList.toggle('active');
-            this.classList.toggle('active');
-        });
-        
-        // Close menu when clicking on the main content area
-        content.addEventListener('click', function() {
+    if (!mobileMenuToggle || !sidebar) return;
+    
+    mobileMenuToggle.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent event bubbling
+        sidebar.classList.toggle('active');
+        this.classList.toggle('active');
+    });
+    
+    // Close menu when clicking on the main content area
+    document.addEventListener('click', function(e) {
+        // Check if sidebar is open and click is outside the sidebar
+        if (sidebar.classList.contains('active') && 
+            !sidebar.contains(e.target) && 
+            e.target !== mobileMenuToggle) {
+            sidebar.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+        }
+    });
+    
+    // Close menu when clicking a menu link (for mobile)
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
             if (sidebar.classList.contains('active')) {
                 sidebar.classList.remove('active');
                 mobileMenuToggle.classList.remove('active');
             }
         });
-        
-        // Close menu when clicking a menu link (for mobile)
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (sidebar.classList.contains('active')) {
-                    sidebar.classList.remove('active');
-                    mobileMenuToggle.classList.remove('active');
-                }
-            });
-        });
-    }
+    });
     
     // Add check for any potential gap between sidebar and content
     if (window.innerWidth <= 650) {
@@ -220,6 +243,30 @@ function setupMobileMenu() {
             document.documentElement.style.setProperty('--sidebar-gap', '0px');
         } else {
             document.documentElement.style.setProperty('--sidebar-gap', '0px');
+        }
+    });
+}
+
+/**
+ * Highlight the current page in navigation
+ */
+function highlightCurrentPageNav() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    
+    navLinks.forEach(link => {
+        // Remove any existing active classes
+        link.classList.remove('active');
+        
+        // Get the path from href
+        const linkPath = new URL(link.href, window.location.origin).pathname;
+        
+        // Check if this link corresponds to current page
+        if (currentPath === linkPath || 
+            (currentPath.includes('/shop/') && linkPath.includes('/shop/'))) {
+            link.classList.add('active');
+        } else if (currentPath === '/' && linkPath.includes('#home')) {
+            link.classList.add('active');
         }
     });
 }

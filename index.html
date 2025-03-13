@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Add favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container">
         <!-- Mobile menu button (hamburger) -->
-        <button class="mobile-menu-toggle">
+        <button class="mobile-menu-toggle" aria-label="Toggle navigation menu">
             <span class="hamburger-icon">
                 <span class="line"></span>
                 <span class="line"></span>
@@ -25,7 +27,9 @@
             <div class="sidebar-content">
                 <!-- Logo Image -->
                 <div class="logo">
-                    <img src="https://i.imgur.com/2vsdAdd.png" alt="OCULAR Logo">
+                    <a href="#home">
+                        <img src="https://i.imgur.com/2vsdAdd.png" alt="OCULAR Logo">
+                    </a>
                 </div>
                 <ul class="nav-menu">
                     <li><a href="#home" class="active">Home</a></li>
@@ -38,10 +42,10 @@
                 <!-- Sidebar footer -->
                 <div class="sidebar-footer">
                     <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-discord"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitch"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="social-icon" aria-label="Twitch"><i class="fab fa-twitch"></i></a>
+                        <a href="#" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
                     </div>
                     <div class="copyright">
                         &copy; 2023 OCULAR
