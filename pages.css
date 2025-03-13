@@ -1,0 +1,47 @@
+/* Additional styles for content pages */
+.content-wrapper {
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    margin: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.content-section {
+    margin-top: 20px;
+}
+
+.page-content h1 {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.page-content h2 {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 24px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.page-content p {
+    font-family: 'Roboto', Arial, sans-serif;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.sidebar .footer ul li a.active {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Add a background image to the secondary pages */
+.page-content {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                url('https://images.unsplash.com/photo-1464802686167-b939a6910659') no-repeat center center;
+    background-size: cover;
+    color: white;
+    overflow-y: auto;
+}

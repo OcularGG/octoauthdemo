@@ -6,6 +6,7 @@
     <title>Homepage</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
@@ -14,17 +15,20 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Rat Stats</a></li>
-                <li><a href="#">Support Us</a></li>
+                <li class="dropdown">
+                    <a href="#">About Us</a>
+                    <ul class="dropdown-content">
+                        <li><a href="litefootz.html">Litefootz's Vision</a></li>
+                        <li><a href="history.html">History</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <div class="footer">
             <ul>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Acknowledgements</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="acknowledgements.html">Acknowledgements</a></li>
             </ul>
             <button class="get-fuel">APPLY TO OCULAR</button>
         </div>
