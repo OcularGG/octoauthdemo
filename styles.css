@@ -28,50 +28,55 @@ body {
 
 /* ===== NAVIGATION STYLES ===== */
 .sidebar {
-    width: 15%; /* Reduced from 20% to 15% */
+    width: 7.5%; /* Reduced from 15% to 7.5% (half the width) */
     background-color: #222;
     color: white;
     height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
-    padding: 20px;
-    z-index: 10; /* Ensures sidebar appears above other content */
-    box-shadow: none; /* Remove any box-shadow that might create a line */
-    border-right: none; /* Remove any border that might create a line */
+    padding: 15px 10px; /* Reduced padding for narrower sidebar */
+    z-index: 10;
+    box-shadow: none;
+    border-right: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .logo {
     text-align: center;
-    margin-bottom: 40px;
-    padding-top: 20px;
+    margin-bottom: 30px; /* Reduced margin */
+    padding-top: 15px; /* Reduced padding */
+}
+
+.logo h1 {
+    font-size: 1.2rem; /* Smaller logo text for narrower sidebar */
 }
 
 .nav-menu {
     list-style: none;
+    width: 100%;
+    text-align: center;
 }
 
 .nav-menu li {
-    margin-bottom: 15px;
+    margin-bottom: 12px; /* Reduced margin */
 }
 
 .nav-menu a {
     color: white;
     text-decoration: none;
-    font-size: 18px;
-    transition: color 0.3s ease; /* Smooth color transition on hover */
+    font-size: 0.9rem; /* Smaller font size for menu items */
+    transition: color 0.3s ease;
     display: block;
-    padding: 10px;
-}
-
-.nav-menu a:hover {
-    color: #00bcd4; /* Cyan highlight color on hover */
+    padding: 8px 5px; /* Reduced padding */
 }
 
 /* ===== SLIDESHOW & CONTENT STYLES ===== */
 .content {
-    width: 85%; /* Increased from 80% to 85% to match the sidebar change */
-    margin-left: 15%; /* Changed from 20% to 15% to match the sidebar width */
+    width: 92.5%; /* Increased from 85% to 92.5% to match reduced sidebar */
+    margin-left: 7.5%; /* Changed from 15% to 7.5% to match sidebar width */
     height: 100vh;
     border-left: none; /* Remove any border that might create a line */
 }
@@ -195,248 +200,285 @@ body {
 
 /* ===== FOOTER STYLES ===== */
 .footer {
-    position: absolute;
+    position: absolute;or: rgba(0, 0, 0, 0.7);
     bottom: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 20px;
-    text-align: center;
-    z-index: 5;
-}
+    width: 100%;px;
+    background-color: rgba(0, 0, 0, 0.7);   text-align: center;
+    color: white;    z-index: 5;
+    padding: 20px;ex;
+    text-align: center;mn;
+    z-index: 5;   align-items: center;
+}    justify-content: center;
 
 .social-icons {
     margin-bottom: 15px;
-}
+}15px;
 
-.social-icon {
+.social-icon {r;
     color: white;
     font-size: 24px;
     margin: 0 12px;
     transition: color 0.3s ease, transform 0.3s ease;
     display: inline-block;
-}
-
-.social-icon:hover {
+}   margin: 0 12px;
+    transition: color 0.3s ease, transform 0.3s ease;
+.social-icon:hover { inline-block;
     color: #00bcd4; /* Cyan highlight color on hover */
     transform: scale(1.2); /* Slightly enlarge on hover */
-}
-
-.copyright {
+}social-icon:hover {
+    color: #00bcd4; /* Cyan highlight color on hover */
+.copyright {tly enlarge on hover */
     font-size: 14px;
     opacity: 0.8;
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
-/* Adjustments for tablet and mobile devices */
+/* ===== RESPONSIVE DESIGN ===== */pacity: 0.8;
+/* Adjustments for tablet and mobile devices */lock;
 @media screen and (max-width: 768px) {
     .sidebar {
-        width: 20%; /* Reduced from 30% to 20% */
+        width: 10%; /* Reduced from 20% to 10% */
     }
     .content {
-        width: 80%; /* Increased from 70% to 80% */
-        margin-left: 20%; /* Changed from 30% to 20% */
+        width: 90%; /* Increased from 80% to 90% */justments for tablet and mobile devices */
+        margin-left: 10%; /* Changed from 20% to 10% */idth: 768px) {
     }
-    .text-overlay {
+    .text-overlay {   width: 20%; /* Reduced from 30% to 20% */
         font-size: 3rem; /* Smaller text on smaller screens */
     }
-    .tagline-container {
-        font-size: 1.4rem;
-    }
-    .social-icon {
-        font-size: 20px;
+    .tagline-container {Increased from 70% to 80% */
+        font-size: 1.4rem;   margin-left: 20%; /* Changed from 30% to 20% */
+    }   }
+    .social-icon {    .text-overlay {
+        font-size: 20px;text on smaller screens */
         margin: 0 10px;
+    }iner {
+    .logo h1 {.4rem;
+        font-size: 1rem; /* Even smaller on tablets */
+    } {
+    .nav-menu a {e: 20px;
+        font-size: 0.8rem;x;
+        padding: 7px 4px;
     }
 }
 
 /* ===== MOBILE MENU STYLES ===== */
-.mobile-menu-toggle {
-    display: none;
+.mobile-menu-toggle {   display: none;
+    display: none;    position: fixed;
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 20;
     background: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
+    border: none;   cursor: pointer;
+    cursor: pointer;    padding: 10px;
+    padding: 10px;gba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);4px;
     border-radius: 4px;
 }
 
 .hamburger-icon {
     width: 30px;
-    height: 20px;
-    position: relative;
+    height: 20px;   position: relative;
+    position: relative;    display: block;
     display: block;
 }
 
-.hamburger-icon .line {
-    display: block;
+.hamburger-icon .line {   display: block;
+    display: block;    width: 100%;
     width: 100%;
-    height: 3px;
-    background-color: white;
-    margin: 5px 0;
+    height: 3px;color: white;
+    background-color: white;   margin: 5px 0;
+    margin: 5px 0;    transition: all 0.3s ease;
     transition: all 0.3s ease;
 }
-
-/* Mobile menu toggle animation */
+* Mobile menu toggle animation */
+/* Mobile menu toggle animation */.mobile-menu-toggle.active .hamburger-icon .line:nth-child(1) {
 .mobile-menu-toggle.active .hamburger-icon .line:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
 }
-
-.mobile-menu-toggle.active .hamburger-icon .line:nth-child(2) {
+active .hamburger-icon .line:nth-child(2) {
+.mobile-menu-toggle.active .hamburger-icon .line:nth-child(2) {: 0;
     opacity: 0;
 }
-
-.mobile-menu-toggle.active .hamburger-icon .line:nth-child(3) {
+oggle.active .hamburger-icon .line:nth-child(3) {
+.mobile-menu-toggle.active .hamburger-icon .line:nth-child(3) {5deg);
     transform: translateY(-8px) rotate(-45deg);
 }
-
+hen mobile menu is active */
 /* Add a dark overlay when mobile menu is active */
 .content::before {
-    content: '';
-    position: fixed;
+    content: '';   position: fixed;
+    position: fixed;    top: 0;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 0;-color: rgba(0, 0, 0, 0.5);
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 5;
-    opacity: 0;
-    visibility: hidden;
+    z-index: 5;pacity: 0;
+    opacity: 0;visibility: hidden;
+    visibility: hidden;: opacity 0.3s ease, visibility 0.3s ease;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     pointer-events: none;
 }
-
-/* ===== RESPONSIVE DESIGN ===== */
+==== RESPONSIVE DESIGN ===== */
+/* ===== RESPONSIVE DESIGN ===== *//
 /* Tablet devices */
 @media screen and (max-width: 768px) {
-    .sidebar {
-        width: 20%; /* Reduced from 30% to 20% */
+    .sidebar {   width: 20%; /* Reduced from 30% to 20% */
+        width: 10%; /* Reduced from 20% to 10% */}
     }
     
-    .content {
-        width: 80%; /* Increased from 70% to 80% */
-        margin-left: 20%; /* Changed from 30% to 20% */
+    .content {   width: 80%; /* Increased from 70% to 80% */
+        width: 90%; /* Increased from 80% to 90% */    margin-left: 20%; /* Changed from 30% to 20% */
+        margin-left: 10%; /* Changed from 20% to 10% */
     }
-    
-    .text-overlay {
-        font-size: 3.5rem; /* Smaller text on smaller screens */
+    text-overlay {
+    .text-overlay {    font-size: 3.5rem; /* Smaller text on smaller screens */
+        font-size: 3.5rem; /* Smaller text on smaller screens */;
         width: 90%;
     }
-    
-    .tagline-container {
+    tagline-container {
+    .tagline-container {    font-size: 1.4rem;
         font-size: 1.4rem;
     }
-    
-    .changing-text-container {
-        min-width: 180px;
-    }
+    ontainer {
+    .changing-text-container {   min-width: 180px;
+        min-width: 180px;   }
+    }    
     
     .social-icon {
         font-size: 20px;
         margin: 0 10px;
     }
-    
     .dot {
+    .dot {: 12px;
         height: 12px;
         width: 12px;
     }
-}
-
-/* Mobile devices - landscape */
+    
+    .logo h1 {bile devices - landscape */
+        font-size: 1rem; /* Even smaller on tablets */ia screen and (max-width: 650px) {
+    }le {
+    */
+    .nav-menu a {
+        font-size: 0.8rem;
+        padding: 7px 4px;
+    }/* Reduced from 70% to 60% for better mobile experience */
+}Adjusted to match the new width */
+   transition: left 0.3s ease;
+/* Mobile devices - landscape */    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
 @media screen and (max-width: 650px) {
     .mobile-menu-toggle {
-        display: block; /* Show hamburger menu */
-    }
+        display: block; /* Show hamburger menu */sidebar.active {
+    }    left: 0; /* Show sidebar when active */
     
     .sidebar {
-        width: 60%; /* Reduced from 70% to 60% for better mobile experience */
-        left: -60%; /* Adjusted to match the new width */
-        transition: left 0.3s ease;
+        width: 40%; /* Reduced from 60% to 40% for better mobile experience */content {
+        left: -40%; /* Adjusted to match the new width */    width: 100%;
+        transition: left 0.3s ease;0;
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-    }
-    
+        padding: 15px;
+    }text-overlay {
+            font-size: 3rem;
     .sidebar.active {
         left: 0; /* Show sidebar when active */
     }
     
     .content {
-        width: 100%;
-        margin-left: 0;
+        width: 100%;   
+        margin-left: 0;    .dots-container {
     }
     
     .text-overlay {
         font-size: 3rem;
-    }
-    
-    .footer {
-        padding: 15px 10px;
+    }nt::before {
+       opacity: 1;
+    .footer {    visibility: visible;
+        padding: 15px 10px;auto;
     }
     
     .dots-container {
-        bottom: 15px;
-        right: 15px;
+        bottom: 15px;obile devices - portrait */
+        right: 15px;480px) {
     }
-
-    .sidebar.active + .content::before {
+   font-size: 2.5rem;
+    .sidebar.active + .content::before {    letter-spacing: 2px;
         opacity: 1;
         visibility: visible;
-        pointer-events: auto;
+        pointer-events: auto;er {
+    }rem;
+       margin-top: 15px;
+    .logo h1 {}
+        font-size: 1.5rem; /* Larger again for slide-out menu */
+    }iner {
+    px;
+    .nav-menu a {
+        font-size: 1rem; /* Larger for slide-out menu */
+        padding: 8px;
     }
-}
-
+}   width: 10px;
+    margin: 0 3px;
 /* Mobile devices - portrait */
 @media screen and (max-width: 480px) {
     .text-overlay {
-        font-size: 2.5rem;
-        letter-spacing: 2px;
-    }
+        font-size: 2.5rem;   font-size: 18px;
+        letter-spacing: 2px;       margin: 0 8px;
+    }    }
     
     .tagline-container {
-        font-size: 1.2rem;
+        font-size: 1.2rem;1.8rem;
         margin-top: 15px;
     }
-    
+    .nav-menu a {
     .changing-text-container {
         min-width: 160px;
     }
     
     .dot {
         height: 10px;
-        width: 10px;
-        margin: 0 3px;
-    }
+        width: 10px;a screen and (max-width: 350px) {
+        margin: 0 3px;.text-overlay {
+    }2rem;
     
     .social-icon {
-        font-size: 18px;
-        margin: 0 8px;
+        font-size: 18px;.tagline-container {
+        margin: 0 8px;e: 1rem;
     }
     
-    .logo h1 {
-        font-size: 1.8rem;
-    }
-    
-    .nav-menu a {
-        font-size: 16px;
-        padding: 8px;
-    }
-}
+    .logo h1 {   .changing-text-container {
+        font-size: 1.8rem;        min-width: 140px;
 
-/* Very small devices */
-@media screen and (max-width: 350px) {
-    .text-overlay {
-        font-size: 2rem;
-    }
-    
-    .tagline-container {
-        font-size: 1rem;
-    }
-    
-    .changing-text-container {
-        min-width: 140px;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}    }        font-size: 12px;    .copyright {        }        margin-bottom: 10px;    .social-icons {        }        min-width: 140px;    .changing-text-container {        }        font-size: 1rem;    .tagline-container {        }        font-size: 2rem;    .text-overlay {@media screen and (max-width: 350px) {/* Very small devices */}    }        padding: 8px;        font-size: 16px;    .nav-menu a {        }    }
     
     .social-icons {
         margin-bottom: 10px;

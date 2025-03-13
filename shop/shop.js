@@ -21,16 +21,22 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 async function fetchProducts() {
     try {
+        console.log("Fetching products from Netlify function...");
         const response = await fetch('/.netlify/functions/get-products');
+        console.log(`Function response status: ${response.status}`);
+        
         if (!response.ok) {
-            throw new Error('Failed to fetch products');
+            const errorText = await response.text();
+            console.error(`API error: ${errorText}`);
+            throw new Error(`Failed to fetch products: ${response.status}`);
         }
         
         const products = await response.json();
+        console.log(`Products received: ${products.length}`);
         displayProducts(products);
     } catch (error) {
         console.error('Error fetching products:', error);
-        showError('Failed to load products. Please try again later.');
+        showError(`Unable to load products. Please try again later. (${error.message})`);
     }
 }
 
@@ -139,6 +145,46 @@ function showError(message) {
         <div class="error-message">
             <i class="fas fa-exclamation-circle"></i>
             <p>${message}</p>
+            <button class="retry-button" onclick="fetchProducts()">Retry</button>
         </div>
     `;
 }
+
+// Add styles for the error message
+document.addEventListener('DOMContentLoaded', function() {
+    // Add styles for error message
+    const style = document.createElement('style');
+    style.textContent = `
+        .error-message {
+            text-align: center;
+            padding: 30px;
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .error-message i {
+            font-size: 3rem;
+            color: #ff5252;
+            margin-bottom: 15px;
+        }
+        .error-message p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .retry-button {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .retry-button:hover {
+            background-color: #008ba3;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    fetchProducts();
+});
