@@ -4,84 +4,428 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Merch Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pages.css">
-    <script src="preload.js"></script>
+    <script src="/assets/js/preload.js"></script>
+    <style>
+        .store-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .category-button {
+            background-color: rgba(0, 0, 0, 0.3);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-button:hover {
+            background-color: rgba(15, 82, 186, 0.3);
+        }
+        
+        .category-button.active {
+            background-color: #0F52BA;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .product-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-details {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 0 5px 0;
+        }
+        
+        .product-price {
+            color: #0F52BA;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .product-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .add-to-cart {
+            background-color: #0F52BA;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #1a6edb;
+        }
+        
+        .collection-banner {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            padding: 50px;
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .collection-banner h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .collection-banner p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+        }
+        
+        .shop-now-button {
+            background-color: #0F52BA;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        
+        .shop-now-button:hover {
+            background-color: #1a6edb;
+        }
+        
+        .cart-summary {
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .cart-summary h3 {
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
+        }
+        
+        .cart-count {
+            display: inline-block;
+            background-color: #0F52BA;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-left: 10px;
+        }
+        
+        .cart-items {
+            margin: 15px 0;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .checkout-button {
+            background-color: #0F52BA;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-button:hover {
+            background-color: #1a6edb;
+        }
+    </style>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz Vision</a></li>
-                        <li><a href="history.html">The History of OCULAR</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="blog.html">Blog</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Stats</a>
-                    <ul class="dropdown-content">
-                        <li><a href="finance.html">Finance</a></li>
-                        <li><a href="recruitment.html">Recruitment</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="media.html">Media</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Support Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="merch.html" class="active">Merch Store</a></li>
-                        <li><a href="donations.html">Donations</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
-        </div>
-    </div>
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
     <div class="main-content page-content">
         <div class="header">
-            <div class="user-menu">
-                <span id="loading-status">Checking authentication...</span>
-                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
-                <div id="user-dropdown" class="user-dropdown" style="display:none">
-                    <button class="user-button">
-                        <img id="user-avatar" src="" alt="User" class="user-avatar">
-                        <span id="username"></span>
-                        <span class="dropdown-arrow">▼</span>
-                    </button>
-                    <div class="user-dropdown-content">
-                        <a href="/dashboard.html">Dashboard</a>
-                        <a href="/auth/logout">Logout</a>
-                    </div>
-                </div>
-            </div>
+            <!-- Include auth-menu component -->
+            <div id="auth-menu-container"></div>
         </div>
         <div class="content-wrapper">
             <h1>Merch Store</h1>
             <div class="content-section">
-                <!-- Content will be added later -->
+                <p>Support OCULAR's mission by purchasing official merchandise. All proceeds help fund our rescue operations across the galaxy.</p>
+                
+                <div class="store-categories">
+                    <button class="category-button active">All Items</button>
+                    <button class="category-button">Apparel</button>
+                    <button class="category-button">Accessories</button>
+                    <button class="category-button">Digital</button>
+                    <button class="category-button">Limited Edition</button>
+                </div>
+                
+                <div class="collection-banner">
+                    <h2>2023 Rescue Collection</h2>
+                    <p>Our new limited edition collection celebrating 10 years of OCULAR rescue operations is now available!</p>
+                    <a href="#" class="shop-now-button">Shop the Collection</a>
+                </div>
+                
+                <div class="product-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27" alt="OCULAR T-Shirt">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">OCULAR Classic T-Shirt</h3>
+                            <p class="product-description">Premium cotton t-shirt featuring the OCULAR logo and our famous slogan.</p>
+                            <div class="product-price">25.00 Cr</div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1556306535-0f09a537f0a3" alt="OCULAR Mug">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Fuel Rats Heat-Sensitive Mug</h3>
+                            <p class="product-description">This heat-sensitive mug reveals our galaxy map when filled with hot liquid.</p>
+                            <div class="product-price">18.50 Cr</div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1589222526442-74c5fc432fab" alt="OCULAR Hoodie">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Rescue Division Hoodie</h3>
+                            <p class="product-description">Stay warm in the void with this heavyweight hoodie featuring our rescue division insignia.</p>
+                            <div class="product-price">45.00 Cr</div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990" alt="OCULAR Poster">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Limited Edition Poster Set</h3>
+                            <p class="product-description">Set of 3 high-quality prints featuring iconic OCULAR rescue missions.</p>
+                            <div class="product-price">30.00 Cr</div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 5 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2" alt="OCULAR Sticker Pack">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Ship Decal Sticker Pack</h3>
+                            <p class="product-description">Waterproof vinyl stickers featuring our logo and various spacecraft designs.</p>
+                            <div class="product-price">12.00 Cr</div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Product 6 -->
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef" alt="OCULAR Cap">
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-title">Embroidered Flight Cap</h3>
+                            <p class="product-description">Adjustable cap with embroidered OCULAR patch, perfect for off-duty pilots.</p>
+                            <div class="product-price">22.00 Cr</div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cart-summary">
+                    <h3>Your Cart <span class="cart-count">0</span></h3>
+                    <div class="cart-items">
+                        <p>Your cart is empty.</p>
+                    </div>
+                    <div class="cart-total">
+                        <span>Total:</span>
+                        <span>0.00 Cr</span>
+                    </div>
+                    <button class="checkout-button">Proceed to Checkout</button>
+                </div>
+                
+                <p style="margin-top: 30px; text-align: center;">For bulk orders or custom merchandise inquiries, please contact our merchandising team at <a href="mailto:merch@ocular.org">merch@ocular.org</a>.</p>
             </div>
         </div>
     </div>
 
-    <script src="auth-check.js"></script>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category buttons
+            const categoryButtons = document.querySelectorAll('.category-button');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    // In a real app, we would filter products here
+                    alert('This would filter products by the selected category: ' + this.textContent);
+                });
+            });
+            
+            // Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            const cartCount = document.querySelector('.cart-count');
+            const cartItems = document.querySelector('.cart-items');
+            const cartTotal = document.querySelector('.cart-total');
+            let cart = [];
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const title = productCard.querySelector('.product-title').textContent;
+                    const price = parseFloat(productCard.querySelector('.product-price').textContent);
+                    
+                    // Add to cart array
+                    cart.push({ title, price });
+                    
+                    // Update cart UI
+                    updateCartUI();
+                    
+                    // Visual feedback
+                    this.textContent = 'Added!';
+                    setTimeout(() => {
+                        this.textContent = 'Add to Cart';
+                    }, 1500);
+                });
+            });
+            
+            function updateCartUI() {
+                // Update count
+                cartCount.textContent = cart.length;
+                
+                // Update items list
+                if (cart.length === 0) {
+                    cartItems.innerHTML = '<p>Your cart is empty.</p>';
+                } else {
+                    let itemsHTML = '';
+                    let total = 0;
+                    
+                    cart.forEach((item, index) => {
+                        itemsHTML += `
+                            <div class="cart-item">
+                                <span>${item.title}</span>
+                                <span>${item.price.toFixed(2)} Cr</span>
+                            </div>
+                        `;
+                        total += item.price;
+                    });
+                    
+                    cartItems.innerHTML = itemsHTML;
+                    cartTotal.innerHTML = `
+                        <span>Total:</span>
+                        <span>${total.toFixed(2)} Cr</span>
+                    `;
+                }
+            }
+            
+            // Checkout button
+            const checkoutButton = document.querySelector('.checkout-button');
+            checkoutButton.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Your cart is empty. Add some items before checking out.');
+                } else {
+                    alert('This would proceed to the checkout process.');
+                }
+            });
+        });
+    </script>
+
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/auth-check.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>
