@@ -1,16 +1,17 @@
-require('dotenv').config();
+require('dotenv').config({ path: './config/.env' });
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const fetch = require('node-fetch');
 const { createClient } = require('@supabase/supabase-js');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5500;
 
 // Import configuration
-const config = require('./auth/config');
+const config = require('./config/auth-config');
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -32,8 +33,10 @@ app.use(session({
   }
 }));
 
-// Serve static files
-app.use(express.static(path.join(__dirname, '/')));
+// Serve static files - update paths
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/components', express.static(path.join(__dirname, 'components')));
+app.use('/', express.static(path.join(__dirname, 'pages')));
 
 // Authentication middleware
 const isAuthenticated = (req, res, next) => {
@@ -43,7 +46,11 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/login.html');
 };
 
-// Routes
+// Routes - update paths as needed
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/index.html'));
+});
+
 app.get('/auth/login', (req, res) => {
   const clientId = process.env.DISCORD_CLIENT_ID || config.discord.clientId;
   const redirectUri = process.env.DISCORD_REDIRECT_URI || config.discord.redirectUri;
@@ -312,12 +319,30 @@ app.get('/api/user', (req, res) => {
 
 // Protected routes
 app.get('/dashboard.html', isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, '/dashboard.html'));
+  res.sendFile(path.join(__dirname, 'pages/dashboard.html'));
 });
 
 // Catch-all route to serve index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, req.path));
+  const filePath = path.join(__dirname, 'pages', req.path);
+  
+  // First try to serve as a direct file
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (!err) {
+      return res.sendFile(filePath);
+    }
+    
+    // If not a file, try with .html extension
+    const htmlPath = filePath + '.html';
+    fs.access(htmlPath, fs.constants.F_OK, (err) => {
+      if (!err) {
+        return res.sendFile(htmlPath);
+      }
+      
+      // If still not found, serve index as SPA
+      res.sendFile(path.join(__dirname, 'pages/index.html'));
+    });
+  });
 });
 
 // Start server

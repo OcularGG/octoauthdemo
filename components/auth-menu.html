@@ -1,0 +1,15 @@
+<div class="user-menu">
+    <span id="loading-status">Checking authentication...</span>
+    <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
+    <div id="user-dropdown" class="user-dropdown" style="display:none">
+        <button class="user-button">
+            <img id="user-avatar" src="" alt="User" class="user-avatar">
+            <span id="username"></span>
+            <span class="dropdown-arrow">▼</span>
+        </button>
+        <div class="user-dropdown-content">
+            <a href="/dashboard.html">Dashboard</a>
+            <a href="/auth/logout">Logout</a>
+        </div>
+    </div>
+</div>

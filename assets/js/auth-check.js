@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', function() {
+// Make the authentication check function globally available
+function initAuthCheck() {
     // Check if user menu elements exist on the page
     const loadingStatus = document.getElementById('loading-status');
     const loginButton = document.getElementById('login-button');
@@ -49,4 +50,15 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.log('User not authenticated', error);
         });
+}
+
+// Expose function globally
+window.initAuthCheck = initAuthCheck;
+
+// Execute on DOM content loaded if not using components system
+document.addEventListener('DOMContentLoaded', function() {
+    // Only auto-run if not using component system
+    if (!document.getElementById('auth-menu-container')) {
+        initAuthCheck();
+    }
 });

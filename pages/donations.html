@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donations</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/pages.css">
+    <script src="/assets/js/preload.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        .donation-container {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        
+        .currency-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .currency-option {
+            background-color: rgba(15, 82, 186, 0.1);
+            border: 2px solid transparent;
+            border-radius: 4px;
+            padding: 8px 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .currency-option:hover {
+            background-color: rgba(15, 82, 186, 0.2);
+        }
+        
+        .currency-option.selected {
+            border-color: #0F52BA;
+            background-color: rgba(15, 82, 186, 0.3);
+        }
+        
+        .donation-amount {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        
+        .amount-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        
+        .amount-option {
+            background-color: rgba(15, 82, 186, 0.1);
+            border: 2px solid transparent;
+            border-radius: 4px;
+            padding: 10px 20px;
+            min-width: 80px;
+            text-align: center;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .amount-option:hover {
+            background-color: rgba(15, 82, 186, 0.2);
+        }
+        
+        .amount-option.selected {
+            border-color: #0F52BA;
+            background-color: rgba(15, 82, 186, 0.3);
+        }
+        
+        .custom-amount {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .custom-amount input {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            padding: 10px 15px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            width: 100px;
+            margin: 0 10px;
+            text-align: center;
+        }
+        
+        .custom-amount input:focus {
+            outline: none;
+            border-color: #0F52BA;
+        }
+        
+        .impact-calculator {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .impact-result {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .impact-detail {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95em;
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .payment-option {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .payment-option:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .payment-option-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .payment-option-header img {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+            object-fit: contain;
+        }
+        
+        .payment-button {
+            background-color: #0F52BA;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .payment-button:hover {
+            background-color: #0a3d8f;
+        }
+        
+        .donation-tiers {
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 30px;
+        }
+        
+        .meter-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .meter-fill {
+            height: 100%;
+            background-color: #0F52BA;
+            width: 0%;
+            transition: width 1s ease-in-out;
+        }
+        
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(15, 82, 186, 0.1);
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .thank-you-message h3 {
+            margin-top: 0;
+            color: #0F52BA;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .amount-options {
+                justify-content: center;
+            }
+            
+            .amount-option {
+                min-width: 60px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body class="page-loading">
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="#">About Us</a>
+                    <ul class="dropdown-content">
+                        <li><a href="litefootz.html">Litefootz Vision</a></li>
+                        <li><a href="history.html">The History of OCULAR</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="blog.html">Blog</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Stats</a>
+                    <ul class="dropdown-content">
+                        <li><a href="finance.html">Finance</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="media.html">Media</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Support Us</a>
+                    <ul class="dropdown-content">
+                        <li><a href="merch.html">Merch Store</a></li>
+                        <li><a href="donations.html" class="active">Donations</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="footer">
+            <ul>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="acknowledgements.html">Acknowledgements</a></li>
+            </ul>
+            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
+        </div>
+    </div>
+    <div class="main-content page-content">
+        <div class="header">
+            <div class="user-menu">
+                <span id="loading-status">Checking authentication...</span>
+                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
+                <div id="user-dropdown" class="user-dropdown" style="display:none">
+                    <button class="user-button">
+                        <img id="user-avatar" src="" alt="User" class="user-avatar">
+                        <span id="username"></span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <a href="/dashboard.html">Dashboard</a>
+                        <a href="/auth/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-wrapper">
+            <h1>Support OCULAR with a Donation</h1>
+            <div class="content-section">
+                <p>Your donations directly support our mission to provide fuel to stranded commanders across the galaxy. Every contribution helps us expand our operations and improve our rescue capabilities.</p>
+                
+                <div class="donation-container">
+                    <div class="currency-selector">
+                        <div class="currency-option selected" data-currency="USD" data-symbol="$">USD ($)</div>
+                        <div class="currency-option" data-currency="EUR" data-symbol="€">EUR (€)</div>
+                        <div class="currency-option" data-currency="GBP" data-symbol="£">GBP (£)</div>
+                    </div>
+                    
+                    <div class="donation-amount">
+                        <div class="amount-options">
+                            <div class="amount-option" data-amount="5">$5</div>
+                            <div class="amount-option selected" data-amount="10">$10</div>
+                            <div class="amount-option" data-amount="25">$25</div>
+                            <div class="amount-option" data-amount="50">$50</div>
+                            <div class="amount-option" data-amount="100">$100</div>
+                        </div>
+                        
+                        <div class="custom-amount">
+                            <span>Custom Amount:</span>
+                            <input type="number" id="custom-amount" min="1" placeholder="Amount">
+                            <span class="currency-symbol">$</span>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-calculator">
+                        <div class="impact-result">Your donation will help sustain our operations for <span id="impact-time">24 hours</span>.</div>
+                        <div class="meter-container">
+                            <div class="meter-fill" id="impact-meter"></div>
+                        </div>
+                        <div class="impact-detail">
+                            This helps us provide emergency fuel to approximately <span id="impact-rescues">2</span> stranded commanders.
+                        </div>
+                    </div>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-option" id="stripe-option">
+                            <div class="payment-option-header">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe">
+                                <h3>Pay with Card</h3>
+                            </div>
+                            <p>Securely donate using your credit or debit card via Stripe.</p>
+                            <button class="payment-button" id="stripe-button">Donate with Stripe</button>
+                        </div>
+                        
+                        <div class="payment-option" id="link-option">
+                            <div class="payment-option-header">
+                                <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/paypal_logo_icon_170865.png" alt="Link">
+                                <h3>Pay with PayPal or Link</h3>
+                            </div>
+                            <p>Checkout easily with PayPal or Link by Stripe.</p>
+                            <button class="payment-button" id="link-button">Donate with PayPal or Link</button>
+                        </div>
+                    </div>
+                    
+                    <div class="thank-you-message" id="thank-you-message">
+                        <h3>Thank You For Your Support!</h3>
+                        <p>Your generosity helps keep commanders safe across the galaxy. A receipt has been sent to your email.</p>
+                        <p>Transaction ID: <span id="transaction-id"></span></p>
+                    </div>
+                    
+                    <div class="donation-tiers">
+                        <h2>How Your Donation Helps</h2>
+                        
+                        <div class="impact-details">
+                            <p>OCULAR operates a vast network of rescue operations, with the following monthly costs:</p>
+                            <ul>
+                                <li>Server infrastructure: $120/month</li>
+                                <li>Dispatch system maintenance: $80/month</li>
+                                <li>Communication networks: $60/month</li>
+                                <li>Pilot training programs: $50/month</li>
+                                <li>Total: Approximately $310/month ($10.33/day)</li>
+                            </ul>
+                            <p>Your donations directly offset these costs and allow us to continue our mission.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store conversion rates and impact calculations
+        const currencies = {
+            USD: { symbol: '$', rate: 1, hourlyRate: 0.43 },
+            EUR: { symbol: '€', rate: 0.92, hourlyRate: 0.40 },
+            GBP: { symbol: '£', rate: 0.79, hourlyRate: 0.34 }
+        };
+        
+        // Default values
+        let currentCurrency = 'USD';
+        let currentAmount = 10;
+        let stripe;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Stripe
+            stripe = Stripe('pk_test_YOUR_STRIPE_PUBLISHABLE_KEY');
+            
+            // Set up currency selector
+            const currencyOptions = document.querySelectorAll('.currency-option');
+            currencyOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    currencyOptions.forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    currentCurrency = this.dataset.currency;
+                    const symbol = currencies[currentCurrency].symbol;
+                    document.querySelector('.currency-symbol').textContent = symbol;
+                    
+                    updateAmountOptions(currentCurrency);
+                    calculateImpact();
+                });
+            });
+            
+            // Set up amount options
+            const amountOptions = document.querySelectorAll('.amount-option');
+            amountOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    amountOptions.forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    
+                    currentAmount = parseFloat(this.dataset.amount);
+                    document.getElementById('custom-amount').value = '';
+                    
+                    calculateImpact();
+                });
+            });
+            
+            // Handle custom amount input
+            const customAmountInput = document.getElementById('custom-amount');
+            customAmountInput.addEventListener('input', function() {
+                if (this.value) {
+                    const amount = parseFloat(this.value);
+                    if (!isNaN(amount)) {
+                        currentAmount = amount;
+                        amountOptions.forEach(o => o.classList.remove('selected'));
+                        calculateImpact();
+                    }
+                }
+            });
+            
+            // Set up payment buttons
+            document.getElementById('stripe-button').addEventListener('click', function() {
+                handleStripePayment();
+            });
+            
+            document.getElementById('link-button').addEventListener('click', function() {
+                handleLinkPayment();
+            });
+            
+            // Initial calculation
+            calculateImpact();
+        });
+        
+        function updateAmountOptions(currency) {
+            const symbol = currencies[currency].symbol;
+            const amountOptions = document.querySelectorAll('.amount-option');
+            
+            amountOptions.forEach(option => {
+                const amount = option.dataset.amount;
+                option.textContent = `${symbol}${amount}`;
+            });
+        }
+        
+        function calculateImpact() {
+            const rate = currencies[currentCurrency].rate;
+            const hourlyRate = currencies[currentCurrency].hourlyRate;
+            
+            // Calculate how many hours this donation will support operations
+            const hoursSupported = (currentAmount / rate / hourlyRate).toFixed(1);
+            const daysSupported = (hoursSupported / 24).toFixed(1);
+            
+            // Calculate how many rescues this might enable (rough estimate: 2 rescues per day)
+            const rescuesEnabled = Math.max(1, Math.round((currentAmount / rate) / 5));
+            
+            // Update the UI
+            let timeText;
+            if (hoursSupported < 24) {
+                timeText = `${hoursSupported} hours`;
+            } else if (daysSupported < 7) {
+                timeText = `${daysSupported} days`;
+            } else {
+                const weeksSupported = (daysSupported / 7).toFixed(1);
+                timeText = `${weeksSupported} weeks`;
+            }
+            
+            document.getElementById('impact-time').textContent = timeText;
+            document.getElementById('impact-rescues').textContent = rescuesEnabled;
+            
+            // Update the impact meter (max at 100% for donations covering 2 weeks or more)
+            const meterPercentage = Math.min(100, (daysSupported / 14) * 100);
+            document.getElementById('impact-meter').style.width = `${meterPercentage}%`;
+        }
+        
+        function handleStripePayment() {
+            // This would normally make a request to your server to create a payment intent
+            // Here's a simplified version for demonstration
+            fetch('/api/create-payment-intent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    amount: currentAmount,
+                    currency: currentCurrency.toLowerCase()
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response (this would normally redirect to Stripe checkout)
+                alert(`Processing ${currencies[currentCurrency].symbol}${currentAmount} donation with Stripe...`);
+                showThankYouMessage('stripe_test_123456');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error processing your payment. Please try again.');
+            });
+        }
+        
+        function handleLinkPayment() {
+            // This would normally redirect to PayPal or use Link by Stripe
+            // Here's a simplified version for demonstration
+            alert(`Processing ${currencies[currentCurrency].symbol}${currentAmount} donation with PayPal/Link...`);
+            showThankYouMessage('link_test_654321');
+        }
+        
+        function showThankYouMessage(transactionId) {
+            document.getElementById('transaction-id').textContent = transactionId;
+            document.getElementById('thank-you-message').style.display = 'block';
+            
+            // Scroll to the thank you message
+            document.getElementById('thank-you-message').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    </script>
+    
+    <script src="/assets/js/auth-check.js"></script>
+    <script src="/assets/js/script.js"></script>
+</body>
+</html>

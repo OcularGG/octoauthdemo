@@ -3,7 +3,7 @@
   command = "# no build command"
 
 [functions]
-  directory = "functions"
+  directory = "api/functions"
 
 [[redirects]]
   from = "/api/*"
@@ -15,7 +15,19 @@
   to = "/.netlify/functions/auth/:splat"
   status = 200
 
+# Handle asset paths
+[[redirects]]
+  from = "/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/components/*"
+  to = "/components/:splat"
+  status = 200
+
+# SPA fallback
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/pages/:splat"
   status = 200
