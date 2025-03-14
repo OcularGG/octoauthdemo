@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pages.css">
-    <script src="preload.js"></script>
+    <script src="/assets/js/preload.js"></script>
     <style>
         .login-container {
             display: flex;
@@ -47,43 +47,22 @@
         }
 
         .error-message {
-            color: #0F52BA; /* Changed from #e74c3c to Sapphire Blue */
+            color: #0F52BA;
             margin-top: 20px;
             padding: 10px;
-            background-color: rgba(15, 82, 186, 0.1); /* Changed from rgba(231, 76, 60, 0.1) to Sapphire Blue with opacity */
+            background-color: rgba(15, 82, 186, 0.1);
             border-radius: 4px;
             display: none;
         }
     </style>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz's Vision</a></li>
-                        <li><a href="history.html">History</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
-        </div>
-    </div>
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
     <div class="main-content page-content">
         <div class="header">
-            <button class="login" onclick="location.href='/login.html';">Login</button>
+            <!-- No auth menu on login page -->
         </div>
         <div class="content-wrapper">
             <h1>Login</h1>
@@ -124,6 +103,9 @@
                     case 'server_error':
                         errorElement.innerText = 'A server error occurred. Please try again later.';
                         break;
+                    case 'session_expired':
+                        errorElement.innerText = 'Your session has expired. Please log in again.';
+                        break;
                     default:
                         errorElement.innerText = 'An unknown error occurred. Please try again.';
                 }
@@ -131,7 +113,7 @@
         });
     </script>
     
-    <script src="auth-check.js"></script>
-    <script src="script.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>

@@ -112,6 +112,16 @@ async function handleCallback(event) {
       .eq('discord_id', userData.id)
       .single();
 
+    if (findError && findError.code !== 'PGRST116') { // PGRST116 is "no rows returned" error
+      console.error('Error checking user:', findError);
+      return {
+        statusCode: 302,
+        headers: {
+          Location: '/login.html?error=database_error'
+        }
+      };
+    }
+
     let userId;
 
     if (!existingUser) {
@@ -212,6 +222,9 @@ function handleUser(event) {
   if (!token) {
     return {
       statusCode: 401,
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ error: 'Not authenticated' })
     };
   }
@@ -231,6 +244,9 @@ function handleUser(event) {
     console.error('Token verification error:', error);
     return {
       statusCode: 401,
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ error: 'Invalid token' })
     };
   }

@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pages.css">
-    <script src="preload.js"></script>
+    <script src="/assets/js/preload.js"></script>
     <style>
         .dashboard-container {
             padding: 2rem;
@@ -68,30 +68,9 @@
     </style>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz's Vision</a></li>
-                        <li><a href="history.html">History</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
-        </div>
-    </div>
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
     <div class="main-content page-content">
         <div class="header">
             <button class="logout-button" onclick="location.href='/auth/logout';">Logout</button>
@@ -144,7 +123,8 @@
         });
     </script>
     
-    <script src="auth-check.js"></script>
-    <script src="script.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/auth-check.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>

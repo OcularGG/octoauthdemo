@@ -6,13 +6,28 @@
   directory = "api/functions"
 
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/:splat"
+  from = "/api/user"
+  to = "/.netlify/functions/auth/user"
   status = 200
 
 [[redirects]]
-  from = "/auth/*"
-  to = "/.netlify/functions/auth/:splat"
+  from = "/auth/login"
+  to = "/.netlify/functions/auth/login"
+  status = 200
+
+[[redirects]]
+  from = "/auth/logout"
+  to = "/.netlify/functions/auth/logout"
+  status = 200
+
+[[redirects]]
+  from = "/auth/discord/callback"
+  to = "/.netlify/functions/auth/discord/callback"
+  status = 200
+
+[[redirects]]
+  from = "/auth/callback"
+  to = "/.netlify/functions/auth/discord/callback"
   status = 200
 
 # Handle asset paths

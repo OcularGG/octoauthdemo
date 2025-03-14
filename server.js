@@ -48,11 +48,15 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/login.html');
 };
 
-// Routes - update paths as needed));
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages/index.html'));
+// API route for user data
+app.get('/api/user', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: 'Not authenticated' });
+  }
+  res.json(req.session.user);
 });
 
+// Auth routes
 app.get('/auth/login', (req, res) => {
   const clientId = process.env.DISCORD_CLIENT_ID || config.discord.clientId;
   const redirectUri = process.env.DISCORD_REDIRECT_URI || config.discord.redirectUri;
@@ -61,13 +65,12 @@ app.get('/auth/login', (req, res) => {
   res.redirect(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scope)}`);
 });
 
-// Update callback route to match Netlify's path structure
-app.get('/auth/discord/callback', async (req, res) => {
-  // Same implementation as '/auth/callback'
+// DRY the callback function
+async function handleAuthCallback(req, res) {
   const { code } = req.query;
   
   if (!code) {
-    return res.status(400).send('No code provided');
+    return res.redirect('/login.html?error=no_code');
   }
 
   try {
@@ -180,127 +183,16 @@ app.get('/auth/discord/callback', async (req, res) => {
     console.error('Auth callback error:', error);
     res.redirect('/login.html?error=server_error');
   }
+}
+
+// Update callback route to match Netlify's path structure
+app.get('/auth/discord/callback', async (req, res) => {
+  await handleAuthCallback(req, res);
 });
 
 // Keep the old callback route for local development
 app.get('/auth/callback', async (req, res) => {
-  // Same implementation as '/auth/discord/callback'
-  const { code } = req.query;
-  
-  if (!code) {
-    return res.status(400).send('No code provided');
-  }
-
-  try {
-    // Exchange code for token
-    const clientId = process.env.DISCORD_CLIENT_ID || config.discord.clientId;
-    const clientSecret = process.env.DISCORD_CLIENT_SECRET || config.discord.clientSecret;
-    const redirectUri = process.env.DISCORD_REDIRECT_URI || config.discord.redirectUri;
-    
-    const tokenResponse = await fetch('https://discord.com/api/oauth2/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: 'authorization_code',
-        code,
-        redirect_uri: redirectUri
-      })
-    });
-
-    const tokenData = await tokenResponse.json();
-    
-    if (!tokenResponse.ok) {
-      console.error('Error getting token:', tokenData);
-      return res.redirect('/login.html?error=token_error');
-    }
-
-    // Get user data from Discord
-    const userResponse = await fetch('https://discord.com/api/users/@me', {
-      headers: {
-        Authorization: `Bearer ${tokenData.access_token}`
-      }
-    });
-
-    const userData = await userResponse.json();
-    
-    if (!userResponse.ok) {
-      console.error('Error getting user data:', userData);
-      return res.redirect('/login.html?error=user_data_error');
-    }
-
-    // Check if user exists in Supabase
-    const { data: existingUser, error: findError } = await supabase
-      .from(config.supabase.userTable)
-      .select('*')
-      .eq('discord_id', userData.id)
-      .single();
-
-    if (findError && findError.code !== 'PGRST116') { // PGRST116 is "no rows returned" error
-      console.error('Error checking user:', findError);
-      return res.redirect('/login.html?error=database_error');
-    }
-
-    let userId;
-
-    if (!existingUser) {
-      // Create new user if they don't exist
-      const { data: newUser, error: createError } = await supabase
-        .from(config.supabase.userTable)
-        .insert([{
-          discord_id: userData.id,
-          username: userData.username,
-          email: userData.email,
-          avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
-        }])
-        .select()
-        .single();
-
-      if (createError) {
-        console.error('Error creating user:', createError);
-        return res.redirect('/login.html?error=registration_error');
-      }
-
-      userId = newUser.id;
-    } else {
-      userId = existingUser.id;
-      
-      // Update existing user data
-      const { error: updateError } = await supabase
-        .from(config.supabase.userTable)
-        .update({
-          username: userData.username,
-          email: userData.email,
-          avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`,
-          last_login: new Date()
-        })
-        .eq('id', userId);
-
-      if (updateError) {
-        console.error('Error updating user:', updateError);
-        // Continue anyway, it's not critical
-      }
-    }
-
-    // Store user in session
-    req.session.user = {
-      id: userId,
-      discordId: userData.id,
-      username: userData.username,
-      email: userData.email,
-      avatar: `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
-    };
-
-    // Redirect to dashboard or homepage
-    res.redirect('/dashboard.html');
-    
-  } catch (error) {
-    console.error('Auth callback error:', error);
-    res.redirect('/login.html?error=server_error');
-  }
+  await handleAuthCallback(req, res);
 });
 
 app.get('/auth/logout', (req, res) => {
@@ -312,13 +204,6 @@ app.get('/auth/logout', (req, res) => {
   });
 });
 
-app.get('/api/user', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: 'Not authenticated' });
-  }
-  res.json(req.session.user);
-});
-
 // Protected routes
 app.get('/dashboard.html', isAuthenticated, (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/dashboard.html'));
@@ -326,7 +211,8 @@ app.get('/dashboard.html', isAuthenticated, (req, res) => {
 
 // Catch-all route to serve index.html
 app.get('*', (req, res) => {
-  const filePath = path.join(__dirname, 'pages', req.path);
+  const urlPath = req.path === '/' ? '/index.html' : req.path;
+  const filePath = path.join(__dirname, 'pages', urlPath);
   
   // First try to serve as a direct file
   fs.access(filePath, fs.constants.F_OK, (err) => {
@@ -335,14 +221,22 @@ app.get('*', (req, res) => {
     }
     
     // If not a file, try with .html extension
-    const htmlPath = filePath + '.html';
+    const htmlPath = urlPath.endsWith('.html') ? filePath : filePath + '.html';
     fs.access(htmlPath, fs.constants.F_OK, (err) => {
       if (!err) {
         return res.sendFile(htmlPath);
       }
       
-      // If still not found, serve index as SPA
-      res.sendFile(path.join(__dirname, 'pages/index.html'));
+      // If still not found, check if it's a protected route
+      const protectedPath = path.join(__dirname, 'protected', urlPath);
+      fs.access(protectedPath, fs.constants.F_OK, (err) => {
+        if (!err && req.session.user) {
+          return res.sendFile(protectedPath);
+        }
+        
+        // If still not found or not authenticated for protected content, serve 404
+        res.status(404).sendFile(path.join(__dirname, 'pages/404.html'));
+      });
     });
   });
 });
