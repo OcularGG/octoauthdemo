@@ -6,7 +6,7 @@
     <title>Homepage</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="sidebar">
@@ -35,7 +35,21 @@
     </div>
     <div class="main-content">
         <div class="header">
-            <button class="login">Login</button>
+            <div class="user-menu">
+                <span id="loading-status">Checking authentication...</span>
+                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
+                <div id="user-dropdown" class="user-dropdown" style="display:none">
+                    <button class="user-button">
+                        <img id="user-avatar" src="" alt="User" class="user-avatar">
+                        <span id="username"></span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <a href="/dashboard.html">Dashboard</a>
+                        <a href="/auth/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="slideshow-container">
             <div class="slideshow-slide fade">
@@ -63,6 +77,52 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication status
+            fetch('/api/user')
+                .then(response => {
+                    document.getElementById('loading-status').style.display = 'none';
+                    
+                    if (!response.ok) {
+                        // User not authenticated, show login button
+                        document.getElementById('login-button').style.display = 'block';
+                        throw new Error('Not authenticated');
+                    }
+                    return response.json();
+                })
+                .then(user => {
+                    // User authenticated, show user dropdown
+                    document.getElementById('user-dropdown').style.display = 'block';
+                    document.getElementById('username').textContent = user.username;
+                    document.getElementById('user-avatar').src = user.avatar;
+                    
+                    // Set up dropdown toggle
+                    const userButton = document.querySelector('.user-button');
+                    const dropdownContent = document.querySelector('.user-dropdown-content');
+                    
+                    userButton.addEventListener('click', function() {
+                        dropdownContent.classList.toggle('show');
+                    });
+                    
+                    // Close dropdown when clicking outside
+                    window.addEventListener('click', function(event) {
+                        if (!event.target.matches('.user-button') && 
+                            !event.target.matches('.user-avatar') && 
+                            !event.target.matches('.dropdown-arrow') &&
+                            !event.target.matches('#username')) {
+                            if (dropdownContent.classList.contains('show')) {
+                                dropdownContent.classList.remove('show');
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.log('User not authenticated', error);
+                });
+        });
+    </script>
+    
     <script src="script.js"></script>
 </body>
 </html>

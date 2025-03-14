@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="pages.css">
+    <style>
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50vh;
+            padding: 2rem;
+        }
+
+        .discord-button {
+            display: flex;
+            align-items: center;
+            background-color: #5865F2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .discord-button:hover {
+            background-color: #4752c4;
+        }
+
+        .discord-button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
+        </div>
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="#">About Us</a>
+                    <ul class="dropdown-content">
+                        <li><a href="litefootz.html">Litefootz's Vision</a></li>
+                        <li><a href="history.html">History</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div class="footer">
+            <ul>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="acknowledgements.html">Acknowledgements</a></li>
+            </ul>
+            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
+        </div>
+    </div>
+    <div class="main-content page-content">
+        <div class="header">
+            <button class="login" onclick="location.href='/login.html';">Login</button>
+        </div>
+        <div class="content-wrapper">
+            <h1>Login</h1>
+            <div class="content-section login-container">
+                <p>Please log in with your Discord account to continue.</p>
+                <div id="error-message" class="error-message"></div>
+                <a href="/auth/login" class="discord-button">
+                    <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92de1e2_icon_clyde_white_RGB.png" alt="Discord">
+                    Login with Discord
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for error parameters in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            
+            if (error) {
+                const errorElement = document.getElementById('error-message');
+                errorElement.style.display = 'block';
+                
+                switch(error) {
+                    case 'token_error':
+                        errorElement.innerText = 'Error authenticating with Discord. Please try again.';
+                        break;
+                    case 'user_data_error':
+                        errorElement.innerText = 'Error retrieving your Discord information. Please try again.';
+                        break;
+                    case 'database_error':
+                        errorElement.innerText = 'Error connecting to our database. Please try again later.';
+                        break;
+                    case 'registration_error':
+                        errorElement.innerText = 'Error creating your account. Please try again.';
+                        break;
+                    case 'server_error':
+                        errorElement.innerText = 'A server error occurred. Please try again later.';
+                        break;
+                    default:
+                        errorElement.innerText = 'An unknown error occurred. Please try again.';
+                }
+            }
+        });
+    </script>
+    
+    <script src="script.js"></script>
+</body>
+</html>

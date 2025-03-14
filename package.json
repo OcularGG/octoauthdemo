@@ -1,0 +1,23 @@
+{
+  "name": "octoauthdemo",
+  "version": "1.0.0",
+  "description": "Website with Discord authentication",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "node-fetch": "^2.6.9",
+    "@supabase/supabase-js": "^2.12.0",
+    "cookie": "^0.5.0",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}

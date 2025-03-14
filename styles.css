@@ -13,6 +13,8 @@ body {
     flex-direction: column;
     justify-content: space-between;
     padding: 20px;
+    position: relative;
+    transition: width 0.3s ease;
 }
 
 .sidebar .logo {
@@ -28,37 +30,67 @@ body {
     object-fit: contain;
 }
 
+/* Modern navigation styles */
+.sidebar nav {
+    margin-top: 30px;
+}
+
 .sidebar nav ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .sidebar nav ul li {
-    margin: 20px 0;
-}
-
-.sidebar nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-family: 'Montserrat', Arial, sans-serif;
-}
-
-.sidebar nav ul li.dropdown {
+    margin: 8px 0;
     position: relative;
 }
 
-.sidebar nav ul li.dropdown:hover .dropdown-content {
-    display: block;
+.sidebar nav ul li a {
+    color: #f4f4f4;
+    text-decoration: none;
+    font-family: 'Montserrat', Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(5px);
+}
+
+.sidebar nav ul li a.active {
+    background-color: #e74c3c;
+    color: white;
+}
+
+/* Updated dropdown styling */
+.sidebar nav ul li.dropdown > a:after {
+    content: '▼';
+    font-size: 10px;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.sidebar nav ul li.dropdown.open > a:after {
+    transform: rotate(180deg);
 }
 
 .sidebar nav ul li .dropdown-content {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: 0;
-    background-color: #333;
-    min-width: 200px;
-    z-index: 1;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    margin-left: 15px;
+    opacity: 0;
+}
+
+.sidebar nav ul li.dropdown.open .dropdown-content {
+    max-height: 200px;
+    opacity: 1;
 }
 
 .sidebar nav ul li .dropdown-content li {
@@ -68,16 +100,22 @@ body {
 .sidebar nav ul li .dropdown-content li a {
     padding: 10px;
     display: block;
-    color: white;
+    color: #ddd;
     text-decoration: none;
+    font-size: 0.95em;
 }
 
 .sidebar nav ul li .dropdown-content li a:hover {
-    background-color: #575757;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar nav ul li .dropdown-content li a.active {
+    background-color: rgba(231, 76, 60, 0.5);
+    color: white;
 }
 
 .sidebar .footer {
-    margin-top: auto; /* Push the footer to the bottom of sidebar */
+    margin-top: auto;
 }
 
 .sidebar .footer ul {
@@ -220,6 +258,81 @@ body {
     cursor: pointer;
     margin-top: 20px;
     font-family: 'Montserrat', Arial, sans-serif;
+}
+
+/* User menu styles */
+.user-menu {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#loading-status {
+    color: #ddd;
+    font-size: 14px;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-button {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.user-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.user-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.dropdown-arrow {
+    font-size: 10px;
+    margin-left: 8px;
+}
+
+.user-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #333;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 10;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.user-dropdown-content.show {
+    display: block;
+}
+
+.user-dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.user-dropdown-content a:hover {
+    background-color: #575757;
 }
 
 /* Responsive design */
