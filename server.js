@@ -6,6 +6,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 const { createClient } = require('@supabase/supabase-js');
 const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 5500;
@@ -20,6 +21,7 @@ const supabase = createClient(
 );
 
 // Set up middleware
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -46,7 +48,7 @@ const isAuthenticated = (req, res, next) => {
   res.redirect('/login.html');
 };
 
-// Routes - update paths as needed
+// Routes - update paths as needed));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/index.html'));
 });
