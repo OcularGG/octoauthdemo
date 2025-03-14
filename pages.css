@@ -7,6 +7,9 @@
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .content-section {
@@ -33,7 +36,7 @@
 }
 
 .sidebar .footer ul li a.active {
-    color: #e74c3c;
+    color: #0F52BA; /* Changed from #e74c3c to Sapphire Blue */
     font-weight: bold;
 }
 
@@ -44,4 +47,10 @@
     background-size: cover;
     color: white;
     overflow-y: auto;
+    will-change: transform;
+}
+
+.page-loading .content-wrapper {
+    opacity: 0;
+    transform: translateY(20px);
 }

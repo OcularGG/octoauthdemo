@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="preload.js"></script>
 </head>
-<body>
+<body class="page-loading">
     <div class="sidebar">
         <div class="logo">
             <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
@@ -77,52 +78,7 @@
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Check authentication status
-            fetch('/api/user')
-                .then(response => {
-                    document.getElementById('loading-status').style.display = 'none';
-                    
-                    if (!response.ok) {
-                        // User not authenticated, show login button
-                        document.getElementById('login-button').style.display = 'block';
-                        throw new Error('Not authenticated');
-                    }
-                    return response.json();
-                })
-                .then(user => {
-                    // User authenticated, show user dropdown
-                    document.getElementById('user-dropdown').style.display = 'block';
-                    document.getElementById('username').textContent = user.username;
-                    document.getElementById('user-avatar').src = user.avatar;
-                    
-                    // Set up dropdown toggle
-                    const userButton = document.querySelector('.user-button');
-                    const dropdownContent = document.querySelector('.user-dropdown-content');
-                    
-                    userButton.addEventListener('click', function() {
-                        dropdownContent.classList.toggle('show');
-                    });
-                    
-                    // Close dropdown when clicking outside
-                    window.addEventListener('click', function(event) {
-                        if (!event.target.matches('.user-button') && 
-                            !event.target.matches('.user-avatar') && 
-                            !event.target.matches('.dropdown-arrow') &&
-                            !event.target.matches('#username')) {
-                            if (dropdownContent.classList.contains('show')) {
-                                dropdownContent.classList.remove('show');
-                            }
-                        }
-                    });
-                })
-                .catch(error => {
-                    console.log('User not authenticated', error);
-                });
-        });
-    </script>
-    
+    <script src="auth-check.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

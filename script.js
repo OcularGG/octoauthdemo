@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Remove loading class once page is loaded
+    document.body.classList.remove('page-loading');
+    
     // Initialize slideshow
     let slideIndex = 0;
     showSlides();
@@ -73,6 +76,59 @@ document.addEventListener('DOMContentLoaded', function() {
                 parentDropdown.classList.add('open');
             }
         }
+    });
+    
+    // Add smooth page transitions
+    document.addEventListener('click', function(e) {
+        // Only process link clicks
+        const link = e.target.closest('a');
+        if (!link) return;
+        
+        // Skip external links, hash links, or links with modifiers
+        if (link.hostname !== window.location.hostname || 
+            link.getAttribute('href').startsWith('#') ||
+            e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+            return;
+        }
+        
+        // Prevent default navigation
+        e.preventDefault();
+        
+        // Fade out
+        document.body.classList.add('page-loading');
+        
+        // Navigate after transition
+        setTimeout(function() {
+            window.location.href = link.href;
+        }, 300);
+    });
+    
+    // Cache pages for faster loading
+    function prefetchPages() {
+        // Find all internal links
+        const links = document.querySelectorAll('a');
+        const internalLinks = Array.from(links)
+            .filter(link => link.hostname === window.location.hostname)
+            .map(link => link.getAttribute('href'));
+        
+        // Prefetch unique links
+        const uniqueLinks = [...new Set(internalLinks)];
+        uniqueLinks.forEach(url => {
+            if (!url.startsWith('#') && url !== window.location.pathname) {
+                const link = document.createElement('link');
+                link.rel = 'prefetch';
+                link.href = url;
+                document.head.appendChild(link);
+            }
+        });
+    }
+    
+    // Run prefetch after page loads
+    window.addEventListener('load', prefetchPages);
+    
+    // Add page loading class before unloading
+    window.addEventListener('beforeunload', function() {
+        document.body.classList.add('page-loading');
     });
     
     // Add event listeners for buttons

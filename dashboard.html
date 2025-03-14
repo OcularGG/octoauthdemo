@@ -8,6 +8,7 @@
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="pages.css">
+    <script src="preload.js"></script>
     <style>
         .dashboard-container {
             padding: 2rem;
@@ -51,7 +52,7 @@
         }
 
         .logout-button {
-            background-color: rgba(231, 76, 60, 0.8);
+            background-color: rgba(15, 82, 186, 0.8);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -62,11 +63,11 @@
         }
 
         .logout-button:hover {
-            background-color: rgba(231, 76, 60, 1);
+            background-color: rgba(15, 82, 186, 1);
         }
     </style>
 </head>
-<body>
+<body class="page-loading">
     <div class="sidebar">
         <div class="logo">
             <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
@@ -143,6 +144,7 @@
         });
     </script>
     
+    <script src="auth-check.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

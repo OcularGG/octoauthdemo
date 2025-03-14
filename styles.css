@@ -3,6 +3,12 @@ body {
     font-family: 'Roboto', Arial, sans-serif;
     display: flex;
     height: 100vh;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+body.page-loading {
+    opacity: 0;
 }
 
 .sidebar {
@@ -15,6 +21,8 @@ body {
     padding: 20px;
     position: relative;
     transition: width 0.3s ease;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .sidebar .logo {
@@ -64,7 +72,7 @@ body {
 }
 
 .sidebar nav ul li a.active {
-    background-color: #e74c3c;
+    background-color: #0F52BA; /* Changed from #e74c3c to Sapphire Blue */
     color: white;
 }
 
@@ -83,7 +91,7 @@ body {
 .sidebar nav ul li .dropdown-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-left 0.3s ease;
     margin-left: 15px;
     opacity: 0;
 }
@@ -110,7 +118,7 @@ body {
 }
 
 .sidebar nav ul li .dropdown-content li a.active {
-    background-color: rgba(231, 76, 60, 0.5);
+    background-color: rgba(15, 82, 186, 0.5); /* Changed from rgba(231, 76, 60, 0.5) to Sapphire Blue with opacity */
     color: white;
 }
 
@@ -137,7 +145,7 @@ body {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    background-color: #e74c3c;
+    background-color: #0F52BA; /* Changed from #e74c3c to Sapphire Blue */
     border: none;
     color: white;
     cursor: pointer;
@@ -178,6 +186,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    will-change: opacity;
 }
 
 .slideshow-slide.active {
@@ -215,7 +224,7 @@ body {
 }
 
 @keyframes fade {
-    from {opacity: .4} 
+    from {opacity: .2} 
     to {opacity: 1}
 }
 
@@ -223,6 +232,8 @@ body {
     display: flex;
     justify-content: flex-end;
     padding: 20px;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .main-content .header .login {
@@ -236,7 +247,14 @@ body {
 
 .main-content .hero {
     text-align: center;
-    margin-top: 100px;
+    margin-top: 0; /* Removed top margin */
+    position: absolute; /* Position absolutely */
+    top: 50%; /* Position at 50% from the top */
+    left: 50%; /* Position at 50% from the left */
+    transform: translate(-50%, -50%); /* Center the element */
+    width: 80%; /* Give it some width */
+    max-width: 800px; /* Maximum width */
+    z-index: 1; /* Ensure it's above the background */
 }
 
 .main-content .hero h1 {
@@ -250,7 +268,7 @@ body {
 }
 
 .main-content .hero .get-fuel {
-    background-color: #e74c3c;
+    background-color: #0F52BA; /* Changed from #e74c3c to Sapphire Blue */
     border: none;
     color: white;
     padding: 15px 30px;
@@ -317,10 +335,19 @@ body {
     z-index: 10;
     border-radius: 4px;
     margin-top: 5px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0s 0.2s;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .user-dropdown-content.show {
-    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .user-dropdown-content a {
@@ -358,4 +385,31 @@ body {
     .main-content .hero p {
         font-size: 18px;
     }
+}
+
+/* Page transition and loading improvements */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optimize renderings for smoother transitions */
+* {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.error-message {
+    color: #0F52BA; /* Changed from #e74c3c to Sapphire Blue */
+    /* ...existing code... */
+}
+
+.logout-button {
+    background-color: rgba(15, 82, 186, 0.8); /* Changed from rgba(231, 76, 60, 0.8) to Sapphire Blue with opacity */
+    /* ...existing code... */
+}
+
+.logout-button:hover {
+    background-color: rgba(15, 82, 186, 1); /* Changed from rgba(231, 76, 60, 1) to solid Sapphire Blue */
 }
