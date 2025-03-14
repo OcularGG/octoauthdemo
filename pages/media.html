@@ -4,84 +4,591 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Media</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pages.css">
-    <script src="preload.js"></script>
+    <script src="/assets/js/preload.js"></script>
+    <style>
+        .media-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab-button:hover {
+            opacity: 1;
+        }
+        
+        .tab-button.active {
+            opacity: 1;
+            border-bottom: 3px solid #0F52BA;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .media-item {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .media-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .media-image {
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .media-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .media-item:hover .media-image img {
+            transform: scale(1.05);
+        }
+        
+        .media-caption {
+            padding: 15px;
+        }
+        
+        .media-caption h3 {
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        
+        .media-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+        }
+        
+        /* Video specific */
+        .video-grid .media-image::after {
+            content: '▶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        /* Audio specific */
+        .audio-grid .media-image::after {
+            content: '♪';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .media-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            position: relative;
+            max-width: 80%;
+            max-height: 80%;
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+        }
+        
+        .modal-content video {
+            max-width: 100%;
+            max-height: 80vh;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .modal-caption {
+            position: absolute;
+            bottom: -40px;
+            left: 0;
+            color: white;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .download-button {
+            display: inline-block;
+            background-color: #0F52BA;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        
+        .download-button:hover {
+            background-color: #1a6edb;
+        }
+        
+        .load-more {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 10px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .load-more:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Press kit */
+        .press-kit {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 25px;
+        }
+        
+        .press-kit h3 {
+            margin-top: 0;
+        }
+        
+        .press-kit-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .press-kit-item {
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .press-kit-item img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz Vision</a></li>
-                        <li><a href="history.html">The History of OCULAR</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="blog.html">Blog</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Stats</a>
-                    <ul class="dropdown-content">
-                        <li><a href="finance.html">Finance</a></li>
-                        <li><a href="recruitment.html">Recruitment</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="media.html" class="active">Media</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Support Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="merch.html">Merch Store</a></li>
-                        <li><a href="donations.html">Donations</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
-        </div>
-    </div>
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
     <div class="main-content page-content">
         <div class="header">
-            <div class="user-menu">
-                <span id="loading-status">Checking authentication...</span>
-                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
-                <div id="user-dropdown" class="user-dropdown" style="display:none">
-                    <button class="user-button">
-                        <img id="user-avatar" src="" alt="User" class="user-avatar">
-                        <span id="username"></span>
-                        <span class="dropdown-arrow">▼</span>
-                    </button>
-                    <div class="user-dropdown-content">
-                        <a href="/dashboard.html">Dashboard</a>
-                        <a href="/auth/logout">Logout</a>
+            <!-- Include auth-menu component -->
+            <div id="auth-menu-container"></div>
+        </div>
+        <div class="content-wrapper">
+            <h1>Media Gallery</h1>
+            <div class="content-section">
+                <p>Browse our collection of images, videos, and audio recordings documenting OCULAR's rescue operations across the galaxy.</p>
+                
+                <div class="media-tabs">
+                    <button class="tab-button active" data-tab="photos">Photos</button>
+                    <button class="tab-button" data-tab="videos">Videos</button>
+                    <button class="tab-button" data-tab="audio">Audio Logs</button>
+                    <button class="tab-button" data-tab="press">Press Kit</button>
+                </div>
+                
+                <!-- Photos Tab -->
+                <div class="tab-content active" id="photos-content">
+                    <div class="media-grid">
+                        <!-- Photo 1 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1464802686167-b939a6910659">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659" alt="Rescue near Sagittarius A*">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Rescue near Sagittarius A*</h3>
+                                <div class="media-date">January 15, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo 2 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Fuel Transfer in Nebula">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Fuel Transfer in Nebula</h3>
+                                <div class="media-date">February 3, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo 3 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa" alt="Operation Deep Rescue">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Operation Deep Rescue</h3>
+                                <div class="media-date">March 22, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo 4 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1451187580459-43490279c0fa">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="OCULAR Fleet Formation">
+                            </div>
+                            <div class="media-caption">
+                                <h3>OCULAR Fleet Formation</h3>
+                                <div class="media-date">April 5, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo 5 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1447433589675-4aaa569f3e05">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1447433589675-4aaa569f3e05" alt="Dangerous Extraction">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Dangerous Extraction</h3>
+                                <div class="media-date">April 19, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo 6 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3" alt="First Contact with New Species">
+                            </div>
+                            <div class="media-caption">
+                                <h3>First Contact with New Species</h3>
+                                <div class="media-date">May 7, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo 7 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031" alt="Neutron Star Navigation">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Neutron Star Navigation</h3>
+                                <div class="media-date">May 23, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Photo 8 -->
+                        <div class="media-item" data-src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca" alt="Graduation Ceremony">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Graduation Ceremony</h3>
+                                <div class="media-date">June 12, 3309</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="load-more">Load More Photos</button>
+                </div>
+                
+                <!-- Videos Tab -->
+                <div class="tab-content" id="videos-content">
+                    <div class="media-grid video-grid">
+                        <!-- Video 1 -->
+                        <div class="media-item" data-video="video1.mp4">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca" alt="Rescue Operations Tutorial">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Rescue Operations Tutorial</h3>
+                                <div class="media-date">March 15, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Video 2 -->
+                        <div class="media-item" data-video="video2.mp4">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659" alt="Beagle Point Expedition">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Beagle Point Expedition</h3>
+                                <div class="media-date">April 22, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Video 3 -->
+                        <div class="media-item" data-video="video3.mp4">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Director's Address">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Director's Address</h3>
+                                <div class="media-date">May 1, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Video 4 -->
+                        <div class="media-item" data-video="video4.mp4">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="Ship Maintenance Guide">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Ship Maintenance Guide</h3>
+                                <div class="media-date">June 8, 3309</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="load-more">Load More Videos</button>
+                </div>
+                
+                <!-- Audio Tab -->
+                <div class="tab-content" id="audio-content">
+                    <div class="media-grid audio-grid">
+                        <!-- Audio 1 -->
+                        <div class="media-item" data-audio="audio1.mp3">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1447433589675-4aaa569f3e05" alt="Emergency Distress Call">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Emergency Distress Call</h3>
+                                <div class="media-date">February 8, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Audio 2 -->
+                        <div class="media-item" data-audio="audio2.mp3">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3" alt="Dispatch Communications">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Dispatch Communications</h3>
+                                <div class="media-date">March 5, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Audio 3 -->
+                        <div class="media-item" data-audio="audio3.mp3">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Pilot's Log">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Pilot's Log: Beyond the Rim</h3>
+                                <div class="media-date">April 12, 3309</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Audio 4 -->
+                        <div class="media-item" data-audio="audio4.mp3">
+                            <div class="media-image">
+                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="Training Session">
+                            </div>
+                            <div class="media-caption">
+                                <h3>Training Session: Fuel Conservation</h3>
+                                <div class="media-date">May 27, 3309</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="load-more">Load More Audio</button>
+                </div>
+                
+                <!-- Press Kit Tab -->
+                <div class="tab-content" id="press-content">
+                    <div class="press-kit">
+                        <h3>OCULAR Media Kit</h3>
+                        <p>Download official OCULAR logos, images, and other media materials for press use. All materials may be used for news and informational purposes with proper attribution to OCULAR.</p>
+                        
+                        <div class="press-kit-items">
+                            <div class="press-kit-item">
+                                <img src="https://i.imgur.com/2vsdAdd.png" alt="OCULAR Logo">
+                                <div>OCULAR Logo</div>
+                                <a href="#" class="download-button">Download</a>
+                            </div>
+                            
+                            <div class="press-kit-item">
+                                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="Fleet Image">
+                                <div>OCULAR Fleet</div>
+                                <a href="#" class="download-button">Download</a>
+                            </div>
+                            
+                            <div class="press-kit-item">
+                                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Rescue Operation">
+                                <div>Rescue Operation</div>
+                                <a href="#" class="download-button">Download</a>
+                            </div>
+                            
+                            <div class="press-kit-item">
+                                <img src="https://images.unsplash.com/photo-1447433589675-4aaa569f3e05" alt="Command Center">
+                                <div>Command Center</div>
+                                <a href="#" class="download-button">Download</a>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin-top: 30px;">Press Contacts</h3>
+                        <p>For media inquiries, please contact our press office at <a href="mailto:media@ocular.org">media@ocular.org</a> or reach out to our Communications Officer, CMDR StarGazer, at <a href="mailto:stargazer@ocular.org">stargazer@ocular.org</a>.</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="content-wrapper">
-            <h1>Media</h1>
-            <div class="content-section">
-                <!-- Content will be added later -->
-            </div>
+    </div>
+
+    <!-- Media Modal -->
+    <div class="media-modal" id="media-modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div id="modal-display"></div>
+            <div class="modal-caption" id="modal-caption"></div>
         </div>
     </div>
 
-    <script src="auth-check.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tab = this.getAttribute('data-tab');
+                    
+                    // Deactivate all tabs
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Activate clicked tab
+                    this.classList.add('active');
+                    document.getElementById(tab + '-content').classList.add('active');
+                });
+            });
+            
+            // Media item click handlers for modal
+            const mediaItems = document.querySelectorAll('.media-item');
+            const modal = document.getElementById('media-modal');
+            const modalDisplay = document.getElementById('modal-display');
+            const modalCaption = document.getElementById('modal-caption');
+            const modalClose = document.querySelector('.modal-close');
+            
+            mediaItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const caption = this.querySelector('.media-caption h3').textContent;
+                    modalCaption.textContent = caption;
+                    
+                    // Handle different media types
+                    if (this.hasAttribute('data-src')) {
+                        // Image
+                        modalDisplay.innerHTML = `<img src="${this.getAttribute('data-src')}" alt="${caption}">`;
+                    } else if (this.hasAttribute('data-video')) {
+                        // Video
+                        modalDisplay.innerHTML = `<video controls><source src="${this.getAttribute('data-video')}" type="video/mp4"></video>`;
+                    } else if (this.hasAttribute('data-audio')) {
+                        // Audio
+                        modalDisplay.innerHTML = `<audio controls><source src="${this.getAttribute('data-audio')}" type="audio/mpeg"></audio>`;
+                    }
+                    
+                    modal.style.display = 'flex';
+                });
+            });
+            
+            // Close modal
+            modalClose.addEventListener('click', function() {
+                modal.style.display = 'none';
+                modalDisplay.innerHTML = '';
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    modalDisplay.innerHTML = '';
+                }
+            });
+            
+            // Example functionality for load more buttons
+            const loadMoreButtons = document.querySelectorAll('.load-more');
+            loadMoreButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('This would load more media items from the server.');
+                });
+            });
+        });
+    </script>
+
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/auth-check.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>

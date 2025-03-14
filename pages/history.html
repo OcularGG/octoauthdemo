@@ -3,85 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>The History of OCULAR</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pages.css">
-    <script src="preload.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="/assets/js/preload.js"></script>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz Vision</a></li>
-                        <li><a href="history.html" class="active">The History of OCULAR</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="blog.html">Blog</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Stats</a>
-                    <ul class="dropdown-content">
-                        <li><a href="finance.html">Finance</a></li>
-                        <li><a href="recruitment.html">Recruitment</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="media.html">Media</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Support Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="merch.html">Merch Store</a></li>
-                        <li><a href="donations.html">Donations</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
-        </div>
-    </div>
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
     <div class="main-content page-content">
         <div class="header">
-            <div class="user-menu">
-                <span id="loading-status">Checking authentication...</span>
-                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
-                <div id="user-dropdown" class="user-dropdown" style="display:none">
-                    <button class="user-button">
-                        <img id="user-avatar" src="" alt="User" class="user-avatar">
-                        <span id="username"></span>
-                        <span class="dropdown-arrow">▼</span>
-                    </button>
-                    <div class="user-dropdown-content">
-                        <a href="/dashboard.html">Dashboard</a>
-                        <a href="/auth/logout">Logout</a>
-                    </div>
-                </div>
-            </div>
+            <!-- Include auth-menu component -->
+            <div id="auth-menu-container"></div>
         </div>
         <div class="content-wrapper">
-            <h1>History</h1>
+            <h1>The History of OCULAR</h1>
             <div class="content-section">
-                <!-- Blank for now -->
+                <h2>The Early Days (3301)</h2>
+                <p>OCULAR began as a simple idea in the mind of CMDR Litefootz in June 3301. Responding to the increasing number of pilots running out of fuel in deep space, Litefootz proposed a radical notion: a dedicated group of pilots who would rescue stranded commanders, regardless of faction or allegiance.</p>
+                
+                <p>Within days of the initial forum post, dozens of pilots had volunteered their services. What started as an informal collective quickly gained structure as rescue protocols were established and training methods were developed.</p>
+                
+                <div class="quote-block">
+                    <p>"I never expected it to grow this big. I just wanted to help people who were stuck." - CMDR Litefootz, Founder</p>
+                </div>
+                
+                <h2>Formalization (3302-3303)</h2>
+                <p>By early 3302, OCULAR had performed over 10,000 successful rescues. The organization formalized its structure, establishing the now-famous dispatch system and the iconic motto: "We have fuel. You don't. Any questions?"</p>
+                
+                <p>The Commander Training Program was established in mid-3302, standardizing rescue protocols and teaching advanced fuel conservation techniques. This period also saw the introduction of the OCULAR tracking system, which has since been instrumental in coordinating rescue operations across the galaxy.</p>
+                
+                <h2>Expansion Era (3304-3306)</h2>
+                <p>As humanity's presence in space expanded, so did OCULAR. With the discovery of new regions and the establishment of colonies farther from the bubble, OCULAR faced new challenges. The organization responded by establishing forward operating bases and developing specialized rescue ships for extreme environments.</p>
+                
+                <p>The "Deep Space Initiative" was launched in 3305, extending OCULAR's reach to the farthest explored regions of the galaxy. This period also saw the establishment of the OCULAR Research Division, dedicated to studying fuel efficiency and emergency life support technologies.</p>
+                
+                <h2>Modern OCULAR (3307-Present)</h2>
+                <p>Today, OCULAR stands as one of the most respected organizations in inhabited space. With over 100,000 members and millions of successful rescues, its reputation for reliability and professionalism is unmatched.</p>
+                
+                <p>Recent initiatives include the "Never Fly Without Rebuy" awareness campaign and partnerships with ship manufacturers to improve fuel scoop technologies. The organization continues to grow, with new recruits joining daily and operations expanding to newly discovered regions.</p>
+                
+                <p>As humanity continues to push the boundaries of explored space, OCULAR remains committed to its founding principle: no commander left behind.</p>
             </div>
         </div>
     </div>
-    
-    <script src="auth-check.js"></script>
-    <script src="script.js"></script>
+
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/auth-check.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>

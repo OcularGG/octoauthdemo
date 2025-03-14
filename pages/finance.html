@@ -4,84 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pages.css">
-    <script src="preload.js"></script>
+    <script src="/assets/js/preload.js"></script>
+    <style>
+        .chart-container {
+            max-width: 100%;
+            height: 300px;
+            margin: 30px 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            position: relative;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .chart-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .data-table th, .data-table td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .data-table th {
+            background-color: rgba(15, 82, 186, 0.3);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .data-table tr:nth-child(even) {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .finance-highlight {
+            background-color: rgba(15, 82, 186, 0.1);
+            border-left: 4px solid #0F52BA;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .finance-highlight h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+    </style>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz Vision</a></li>
-                        <li><a href="history.html">The History of OCULAR</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="blog.html">Blog</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Stats</a>
-                    <ul class="dropdown-content">
-                        <li><a href="finance.html" class="active">Finance</a></li>
-                        <li><a href="recruitment.html">Recruitment</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="media.html">Media</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Support Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="merch.html">Merch Store</a></li>
-                        <li><a href="donations.html">Donations</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
-        </div>
-    </div>
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
     <div class="main-content page-content">
         <div class="header">
-            <div class="user-menu">
-                <span id="loading-status">Checking authentication...</span>
-                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
-                <div id="user-dropdown" class="user-dropdown" style="display:none">
-                    <button class="user-button">
-                        <img id="user-avatar" src="" alt="User" class="user-avatar">
-                        <span id="username"></span>
-                        <span class="dropdown-arrow">▼</span>
-                    </button>
-                    <div class="user-dropdown-content">
-                        <a href="/dashboard.html">Dashboard</a>
-                        <a href="/auth/logout">Logout</a>
-                    </div>
-                </div>
-            </div>
+            <!-- Include auth-menu component -->
+            <div id="auth-menu-container"></div>
         </div>
         <div class="content-wrapper">
             <h1>Finance Stats</h1>
             <div class="content-section">
-                <!-- Content will be added later -->
+                <p>OCULAR operates as a non-profit organization, sustained by donations and merchandise sales. All financial data is transparent and available to the public. Here's an overview of our financial operations for the current year.</p>
+                
+                <div class="finance-highlight">
+                    <h3>2023 Financial Summary</h3>
+                    <p>All operations fully funded with a 12% increase in rescue capacity and a 5% reduction in overhead costs compared to previous year.</p>
+                </div>
+                
+                <h2>Annual Budget</h2>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <p>Annual Budget Allocation Chart</p>
+                        <small>Interactive chart displayed here</small>
+                    </div>
+                </div>
+                
+                <p>Our annual budget of 125.7 million credits is carefully allocated to maximize our rescue capabilities while maintaining sustainable operations. Infrastructure and fuel costs represent our largest expenditures.</p>
+                
+                <h2>Quarterly Breakdown</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4 (Projected)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Fuel & Resources</td>
+                            <td>12.3M Cr</td>
+                            <td>14.1M Cr</td>
+                            <td>13.7M Cr</td>
+                            <td>15.0M Cr</td>
+                        </tr>
+                        <tr>
+                            <td>Ship Maintenance</td>
+                            <td>8.2M Cr</td>
+                            <td>7.5M Cr</td>
+                            <td>9.1M Cr</td>
+                            <td>8.5M Cr</td>
+                        </tr>
+                        <tr>
+                            <td>Station Upkeep</td>
+                            <td>6.4M Cr</td>
+                            <td>6.4M Cr</td>
+                            <td>6.4M Cr</td>
+                            <td>6.4M Cr</td>
+                        </tr>
+                        <tr>
+                            <td>Training Programs</td>
+                            <td>4.3M Cr</td>
+                            <td>3.8M Cr</td>
+                            <td>5.2M Cr</td>
+                            <td>4.1M Cr</td>
+                        </tr>
+                        <tr>
+                            <td>Rescue Operations</td>
+                            <td>9.5M Cr</td>
+                            <td>11.2M Cr</td>
+                            <td>10.8M Cr</td>
+                            <td>12.5M Cr</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h2>Donation Impact</h2>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <p>Donation Impact Visualization</p>
+                        <small>Interactive chart displayed here</small>
+                    </div>
+                </div>
+                
+                <p>Every credit donated to OCULAR goes directly to supporting our rescue operations. Administrative costs are kept to an absolute minimum thanks to our volunteer staff and operational efficiency.</p>
+                
+                <div class="finance-highlight">
+                    <h3>Impact Metrics</h3>
+                    <ul>
+                        <li>Average cost per rescue: 23,450 credits</li>
+                        <li>Number of rescues this year: 4,253 (up 18% from last year)</li>
+                        <li>Operational efficiency: 92% (industry average: 78%)</li>
+                    </ul>
+                </div>
+                
+                <h2>Annual Financial Report</h2>
+                <p>For a complete breakdown of our finances, including detailed expenditure reports and audit results, please see our <a href="#">Annual Financial Report</a>. This document is updated quarterly and undergoes independent audit annually.</p>
+                
+                <p>Questions about our finances? Contact our Finance Officer at <a href="mailto:finance@ocular.org">finance@ocular.org</a>.</p>
             </div>
         </div>
     </div>
 
-    <script src="auth-check.js"></script>
-    <script src="script.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/auth-check.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>

@@ -4,84 +4,315 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="pages.css">
-    <script src="preload.js"></script>
+    <script src="/assets/js/preload.js"></script>
+    <style>
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .blog-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .blog-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+        
+        .blog-content {
+            padding: 20px;
+        }
+        
+        .blog-date {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .blog-title {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            line-height: 1.4;
+        }
+        
+        .blog-excerpt {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .blog-readmore {
+            color: #0F52BA;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            transition: color 0.3s;
+        }
+        
+        .blog-readmore:hover {
+            color: #1a6edb;
+        }
+        
+        .blog-categories {
+            margin-top: 15px;
+        }
+        
+        .blog-category {
+            display: inline-block;
+            padding: 3px 10px;
+            background-color: rgba(15, 82, 186, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 5px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .blog-pagination {
+            margin-top: 40px;
+            text-align: center;
+        }
+        
+        .pagination-button {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: rgba(15, 82, 186, 0.5);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .pagination-button:hover {
+            background-color: rgba(15, 82, 186, 0.8);
+        }
+        
+        .pagination-button.disabled {
+            background-color: rgba(255, 255, 255, 0.1);
+            cursor: not-allowed;
+        }
+        
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .filter-label {
+            margin-right: 10px;
+        }
+        
+        .filter-select {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 4px;
+            min-width: 150px;
+        }
+        
+        .search-box {
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 4px;
+            flex-grow: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz Vision</a></li>
-                        <li><a href="history.html">The History of OCULAR</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="blog.html" class="active">Blog</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Stats</a>
-                    <ul class="dropdown-content">
-                        <li><a href="finance.html">Finance</a></li>
-                        <li><a href="recruitment.html">Recruitment</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="media.html">Media</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Support Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="merch.html">Merch Store</a></li>
-                        <li><a href="donations.html">Donations</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel" onclick="location.href='index.html';">BACK TO HOME</button>
-        </div>
-    </div>
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
     <div class="main-content page-content">
         <div class="header">
-            <div class="user-menu">
-                <span id="loading-status">Checking authentication...</span>
-                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
-                <div id="user-dropdown" class="user-dropdown" style="display:none">
-                    <button class="user-button">
-                        <img id="user-avatar" src="" alt="User" class="user-avatar">
-                        <span id="username"></span>
-                        <span class="dropdown-arrow">▼</span>
-                    </button>
-                    <div class="user-dropdown-content">
-                        <a href="/dashboard.html">Dashboard</a>
-                        <a href="/auth/logout">Logout</a>
-                    </div>
-                </div>
-            </div>
+            <!-- Include auth-menu component -->
+            <div id="auth-menu-container"></div>
         </div>
         <div class="content-wrapper">
-            <h1>Blog</h1>
+            <h1>OCULAR Blog</h1>
             <div class="content-section">
-                <!-- Content will be added later -->
+                <p>Stay updated with the latest news, rescue stories, and technical insights from the frontlines of OCULAR operations.</p>
+                
+                <div class="filter-bar">
+                    <div>
+                        <span class="filter-label">Category:</span>
+                        <select class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="rescue">Rescue Stories</option>
+                            <option value="tech">Tech Updates</option>
+                            <option value="training">Training & Tips</option>
+                            <option value="news">News & Events</option>
+                        </select>
+                    </div>
+                    <input type="text" class="search-box" placeholder="Search blog posts...">
+                </div>
+                
+                <div class="blog-grid">
+                    <!-- Blog Post 1 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1462332420958-a05d1e002413" alt="Rescue in the Formidine Rift">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">July 15, 3309</div>
+                            <h3 class="blog-title">Unprecedented Rescue in the Formidine Rift</h3>
+                            <p class="blog-excerpt">OCULAR dispatchers coordinate a complex 48-hour operation to save an explorer stranded 15,000 light-years from Sol with critical life support failure.</p>
+                            <a href="#" class="blog-readmore">Read More</a>
+                            <div class="blog-categories">
+                                <span class="blog-category">Rescue Stories</span>
+                                <span class="blog-category">Deep Space</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 2 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1484589065579-248aad0d8b13" alt="Annual Fleet Report">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">June 28, 3309</div>
+                            <h3 class="blog-title">Annual Fleet Report: New Rescue Vessels Added</h3>
+                            <p class="blog-excerpt">This year's fleet expansion includes 15 new specialized rescue vessels equipped with extended range fuel tanks and improved emergency repair capabilities.</p>
+                            <a href="#" class="blog-readmore">Read More</a>
+                            <div class="blog-categories">
+                                <span class="blog-category">News & Events</span>
+                                <span class="blog-category">Fleet Updates</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 3 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1" alt="Fuel Efficiency">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">June 12, 3309</div>
+                            <h3 class="blog-title">Maximizing Fuel Efficiency in Neutron Star Fields</h3>
+                            <p class="blog-excerpt">Our technical team shares advanced techniques for navigating neutron star highways while maintaining optimal fuel reserves for emergency situations.</p>
+                            <a href="#" class="blog-readmore">Read More</a>
+                            <div class="blog-categories">
+                                <span class="blog-category">Training & Tips</span>
+                                <span class="blog-category">Tech Updates</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 4 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1581822261290-991b38693d1b" alt="Dispatch System">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">May 30, 3309</div>
+                            <h3 class="blog-title">Next-Gen Dispatch System Deployed</h3>
+                            <p class="blog-excerpt">OCULAR's new dispatch system reduces response times by 32% through improved algorithms and integrated galactic mapping features.</p>
+                            <a href="#" class="blog-readmore">Read More</a>
+                            <div class="blog-categories">
+                                <span class="blog-category">Tech Updates</span>
+                                <span class="blog-category">Operations</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 5 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1502209524164-acea936639a2" alt="Rescue Tales">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">May 17, 3309</div>
+                            <h3 class="blog-title">Tales from the Void: A Dispatcher's Log</h3>
+                            <p class="blog-excerpt">Senior Dispatcher Eliza Chen shares stories from her 5 years coordinating some of the most challenging rescues in OCULAR history.</p>
+                            <a href="#" class="blog-readmore">Read More</a>
+                            <div class="blog-categories">
+                                <span class="blog-category">Rescue Stories</span>
+                                <span class="blog-category">Profiles</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Post 6 -->
+                    <div class="blog-card">
+                        <div class="blog-image">
+                            <img src="https://images.unsplash.com/photo-1446941303752-a64bb1048d54" alt="Training Program">
+                        </div>
+                        <div class="blog-content">
+                            <div class="blog-date">May 3, 3309</div>
+                            <h3 class="blog-title">2023 Training Program Now Accepting Applications</h3>
+                            <p class="blog-excerpt">OCULAR's renowned rescue pilot training program opens registration for the upcoming cycle. Learn what it takes to join the elite ranks of fuel rescue pilots.</p>
+                            <a href="#" class="blog-readmore">Read More</a>
+                            <div class="blog-categories">
+                                <span class="blog-category">Training & Tips</span>
+                                <span class="blog-category">Recruitment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="blog-pagination">
+                    <a href="#" class="pagination-button disabled">Previous</a>
+                    <a href="#" class="pagination-button">1</a>
+                    <a href="#" class="pagination-button">2</a>
+                    <a href="#" class="pagination-button">3</a>
+                    <a href="#" class="pagination-button">Next</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <script src="auth-check.js"></script>
-    <script src="script.js"></script>
+    <script src="/assets/js/components.js"></script>
+    <script src="/assets/js/auth-check.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>
