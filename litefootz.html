@@ -8,8 +8,9 @@
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="pages.css">
+    <script src="preload.js"></script>
 </head>
-<body>
+<body class="page-loading">
     <div class="sidebar">
         <div class="logo">
             <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
@@ -19,8 +20,28 @@
                 <li class="dropdown">
                     <a href="#">About Us</a>
                     <ul class="dropdown-content">
-                        <li><a href="litefootz.html" class="active">Litefootz's Vision</a></li>
-                        <li><a href="history.html">History</a></li>
+                        <li><a href="litefootz.html" class="active">Litefootz Vision</a></li>
+                        <li><a href="history.html">The History of OCULAR</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="blog.html">Blog</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Stats</a>
+                    <ul class="dropdown-content">
+                        <li><a href="finance.html">Finance</a></li>
+                        <li><a href="recruitment.html">Recruitment</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="media.html">Media</a>
+                </li>
+                <li class="dropdown">
+                    <a href="#">Support Us</a>
+                    <ul class="dropdown-content">
+                        <li><a href="merch.html">Merch Store</a></li>
+                        <li><a href="donations.html">Donations</a></li>
                     </ul>
                 </li>
             </ul>
@@ -36,7 +57,21 @@
     </div>
     <div class="main-content page-content">
         <div class="header">
-            <button class="login">Login</button>
+            <div class="user-menu">
+                <span id="loading-status">Checking authentication...</span>
+                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
+                <div id="user-dropdown" class="user-dropdown" style="display:none">
+                    <button class="user-button">
+                        <img id="user-avatar" src="" alt="User" class="user-avatar">
+                        <span id="username"></span>
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="user-dropdown-content">
+                        <a href="/dashboard.html">Dashboard</a>
+                        <a href="/auth/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="content-wrapper">
             <h1>Litefootz's Vision</h1>
@@ -57,5 +92,8 @@
             </div>
         </div>
     </div>
+    
+    <script src="auth-check.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

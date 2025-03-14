@@ -54,6 +54,10 @@ body.page-loading {
     position: relative;
 }
 
+.sidebar nav > ul > li {
+    margin: 12px 0; /* Increased spacing between top-level items */
+}
+
 .sidebar nav ul li a {
     color: #f4f4f4;
     text-decoration: none;
@@ -99,6 +103,27 @@ body.page-loading {
 .sidebar nav ul li.dropdown.open .dropdown-content {
     max-height: 200px;
     opacity: 1;
+}
+
+.sidebar nav ul li.dropdown.open > .dropdown-content {
+    max-height: 500px; /* Increased to accommodate more menu items */
+    opacity: 1;
+}
+
+/* Fix for dropdown menu display */
+.sidebar nav ul li.dropdown > .dropdown-content {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar nav ul li.dropdown.open > .dropdown-content {
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
 }
 
 .sidebar nav ul li .dropdown-content li {

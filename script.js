@@ -2,42 +2,44 @@ document.addEventListener('DOMContentLoaded', function() {
     // Remove loading class once page is loaded
     document.body.classList.remove('page-loading');
     
-    // Initialize slideshow
-    let slideIndex = 0;
-    showSlides();
-    
-    // Global function for navigation controls
-    window.changeSlide = function(n) {
-        showSlides(slideIndex += n);
-    };
-    
-    function showSlides() {
-        let i;
-        let slides = document.getElementsByClassName("slideshow-slide");
+    // Initialize slideshow (only run if elements exist)
+    const slides = document.getElementsByClassName("slideshow-slide");
+    if (slides.length > 0) {
+        let slideIndex = 0;
+        showSlides();
         
-        // Hide all slides
-        for (i = 0; i < slides.length; i++) {
-            slides[i].classList.remove("active");
+        // Global function for navigation controls
+        window.changeSlide = function(n) {
+            showSlides(slideIndex += n);
+        };
+        
+        function showSlides() {
+            let i;
+            
+            // Hide all slides
+            for (i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            // Move to the next slide
+            slideIndex++;
+            
+            // Reset if at the end
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            
+            // If at the beginning when going backwards
+            if (slideIndex < 1) {
+                slideIndex = slides.length;
+            }
+            
+            // Show the current slide
+            slides[slideIndex-1].classList.add("active");
+            
+            // Auto advance slides every 5 seconds
+            setTimeout(showSlides, 5000);
         }
-        
-        // Move to the next slide
-        slideIndex++;
-        
-        // Reset if at the end
-        if (slideIndex > slides.length) {
-            slideIndex = 1;
-        }
-        
-        // If at the beginning when going backwards
-        if (slideIndex < 1) {
-            slideIndex = slides.length;
-        }
-        
-        // Show the current slide
-        slides[slideIndex-1].classList.add("active");
-        
-        // Auto advance slides every 5 seconds
-        setTimeout(showSlides, 5000);
     }
     
     // Modern sidebar menu functionality
@@ -46,28 +48,33 @@ document.addEventListener('DOMContentLoaded', function() {
     dropdownItems.forEach(item => {
         const link = item.querySelector('a');
         
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Toggle current dropdown
-            item.classList.toggle('open');
-            
-            // Close other dropdowns
-            dropdownItems.forEach(otherItem => {
-                if (otherItem !== item) {
-                    otherItem.classList.remove('open');
-                }
+        if (link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Toggle current dropdown
+                item.classList.toggle('open');
+                
+                // Close other dropdowns
+                dropdownItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('open');
+                    }
+                });
             });
-        });
+        }
     });
     
     // Set active menu item based on current page
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    console.log("Current page:", currentPage); // Debug log
     const menuLinks = document.querySelectorAll('.sidebar nav a');
     
     menuLinks.forEach(link => {
         const href = link.getAttribute('href');
+        console.log("Checking link:", href); // Debug log
         if (href === currentPage) {
+            console.log("Active link found:", href); // Debug log
             link.classList.add('active');
             
             // If it's in a dropdown, open the dropdown
