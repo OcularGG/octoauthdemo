@@ -3,101 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
+    <title>OCULAR - Home</title>
     <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/pages.css">
     <link rel="icon" href="https://i.imgur.com/2vsdAdd.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="/assets/js/preload.js"></script>
+    <style>
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                              url('https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            padding: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+        }
+        
+        .cta-button {
+            background-color: #0F52BA;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #0a3d8f;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2rem;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            color: #0F52BA;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .hero-section {
+                height: 400px;
+            }
+        }
+    </style>
 </head>
 <body class="page-loading">
-    <div class="sidebar">
-        <div class="logo">
-            <img src="https://i.imgur.com/2vsdAdd.png" alt="Logo">
-        </div>
-        <nav>
-            <ul>
-                <li class="dropdown">
-                    <a href="#">About Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="litefootz.html">Litefootz Vision</a></li>
-                        <li><a href="history.html">The History of OCULAR</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="blog.html">Blog</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Stats</a>
-                    <ul class="dropdown-content">
-                        <li><a href="finance.html">Finance</a></li>
-                        <li><a href="recruitment.html">Recruitment</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="media.html">Media</a>
-                </li>
-                <li class="dropdown">
-                    <a href="#">Support Us</a>
-                    <ul class="dropdown-content">
-                        <li><a href="merch.html">Merch Store</a></li>
-                        <li><a href="donations.html">Donations</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <div class="footer">
-            <ul>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="acknowledgements.html">Acknowledgements</a></li>
-            </ul>
-            <button class="get-fuel">APPLY TO OCULAR</button>
-        </div>
-    </div>
-    <div class="main-content">
+    <!-- Include sidebar component -->
+    <div id="sidebar-container"></div>
+    
+    <div class="main-content page-content">
         <div class="header">
-            <div class="user-menu">
-                <span id="loading-status">Checking authentication...</span>
-                <button id="login-button" class="login" style="display:none" onclick="location.href='/login.html';">Login</button>
-                <div id="user-dropdown" class="user-dropdown" style="display:none">
-                    <button class="user-button">
-                        <img id="user-avatar" src="" alt="User" class="user-avatar">
-                        <span id="username"></span>
-                        <span class="dropdown-arrow">▼</span>
-                    </button>
-                    <div class="user-dropdown-content">
-                        <a href="/dashboard.html">Dashboard</a>
-                        <a href="/auth/logout">Logout</a>
+            <!-- Include auth-menu component -->
+            <div id="auth-menu-container"></div>
+        </div>
+        
+        <div class="content-wrapper">
+            <section class="hero-section">
+                <h1 class="hero-title">OCULAR Rescue Operations</h1>
+                <p class="hero-subtitle">Providing emergency fuel assistance to stranded commanders across the galaxy since 3301.</p>
+                <button class="cta-button">Request Assistance</button>
+            </section>
+            
+            <div class="content-section">
+                <h2>Welcome to OCULAR</h2>
+                <p>We are a volunteer-based organization dedicated to rescuing stranded pilots throughout the galaxy. Our mission is simple: to provide fuel to those who need it, wherever they may be.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>24/7 Emergency Response</h3>
+                        <p>Our network of dedicated rescue pilots stands ready at all times to assist commanders in distress, no matter where in the galaxy they might be stranded.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Galaxy-Wide Coverage</h3>
+                        <p>From the heart of the bubble to the furthest reaches of the galaxy, our rescue teams have the equipment and expertise to reach you.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>Free of Charge</h3>
+                        <p>All rescue operations are provided at no cost to the stranded commander, funded entirely by donations and our dedicated volunteers.</p>
+                    </div>
+                </div>
+                
+                <h2 style="margin-top: 3rem;">Latest Rescue Statistics</h2>
+                <p>Our dedicated team has conducted over 100,000 successful rescues to date. Every day, more commanders join our ranks to help those in need.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>100,000+</h3>
+                        <p>Successful rescues performed since our founding</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>7,000+</h3>
+                        <p>Active rescue pilots across all platforms</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>15 minutes</h3>
+                        <p>Average response time to distress calls</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="slideshow-container">
-            <div class="slideshow-slide fade">
-                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Space Image 1">
-            </div>
-            <div class="slideshow-slide fade">
-                <img src="https://images.unsplash.com/photo-1464802686167-b939a6910659" alt="Space Image 2">
-            </div>
-            <div class="slideshow-slide fade">
-                <img src="https://images.unsplash.com/photo-1446776899648-aa78eefe8ed0" alt="Space Image 3">
-            </div>
-            <div class="slideshow-slide fade">
-                <img src="https://images.unsplash.com/photo-1447433589675-4aaa569f3e05" alt="Space Image 4">
-            </div>
-            <div class="slideshow-slide fade">
-                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa" alt="Space Image 5">
-            </div>
-            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-            <a class="next" onclick="changeSlide(1)">&#10095;</a>
-        </div>
-        <div class="hero">
-            <h1>We Have Fuel. You Don't.</h1>
-            <p>Any Questions?</p>
-            <button class="get-fuel">APPLY TO OCULAR</button>
-        </div>
     </div>
 
+    <script src="/assets/js/components.js"></script>
     <script src="/assets/js/auth-check.js"></script>
     <script src="/assets/js/script.js"></script>
 </body>

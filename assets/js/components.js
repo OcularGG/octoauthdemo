@@ -1,8 +1,11 @@
 // Component loader script
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Component loader initialized');
+    
     // Load sidebar component
     const sidebarContainer = document.getElementById('sidebar-container');
     if (sidebarContainer) {
+        console.log('Loading sidebar component');
         fetch('/components/sidebar.html')
             .then(response => {
                 if (!response.ok) {
@@ -12,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(html => {
                 sidebarContainer.innerHTML = html;
+                console.log('Sidebar component loaded successfully');
                 
                 // Set active menu item based on current page
                 const currentPath = window.location.pathname;
@@ -24,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         href === `/${currentPage}` ||
                         (currentPage === 'index.html' && href === '/')) {
                         link.classList.add('active');
+                        console.log('Set active menu item:', href);
                         
                         // If it's in a dropdown, open the dropdown
                         const parentDropdown = link.closest('.dropdown');
@@ -40,11 +45,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error loading sidebar component:', error);
                 sidebarContainer.innerHTML = '<p>Error loading navigation. Please refresh the page.</p>';
             });
+    } else {
+        console.warn('Sidebar container element not found');
     }
     
     // Load auth menu component
     const authMenuContainer = document.getElementById('auth-menu-container');
     if (authMenuContainer) {
+        console.log('Loading auth menu component');
         fetch('/components/auth-menu.html')
             .then(response => {
                 if (!response.ok) {
@@ -54,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(html => {
                 authMenuContainer.innerHTML = html;
+                console.log('Auth menu component loaded successfully');
+                
                 // Run auth check after the component is loaded
                 if (typeof initAuthCheck === 'function') {
                     initAuthCheck();
@@ -65,6 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error loading auth menu component:', error);
                 authMenuContainer.innerHTML = '<p>Error loading authentication menu.</p>';
             });
+    } else {
+        console.warn('Auth menu container element not found');
     }
 });
 
@@ -81,6 +93,7 @@ function initDropdowns() {
                 
                 // Toggle current dropdown
                 item.classList.toggle('open');
+                console.log('Toggled dropdown:', link.textContent);
                 
                 // Close other dropdowns
                 dropdownItems.forEach(otherItem => {

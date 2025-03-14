@@ -41,8 +41,20 @@
   to = "/components/:splat"
   status = 200
 
-# SPA fallback
+# Root path should serve index.html from pages directory
+[[redirects]]
+  from = "/"
+  to = "/pages/index.html"
+  status = 200
+
+# Specific pages - try to match exact file first
+[[redirects]]
+  from = "/:page.html"
+  to = "/pages/:page.html"
+  status = 200
+
+# SPA fallback for all other routes
 [[redirects]]
   from = "/*"
-  to = "/pages/:splat"
+  to = "/pages/index.html"
   status = 200

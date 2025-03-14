@@ -29,3 +29,15 @@ if ('fonts' in document) {
         console.log('Fonts loaded');
     });
 }
+
+// Preload script to handle page transitions
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded, removing loading class');
+    // Remove loading class after a small delay to ensure components are loaded
+    setTimeout(() => {
+        document.body.classList.remove('page-loading');
+    }, 500);
+});
+
+// Add a console log to indicate the script is loaded
+console.log('Preload script loaded');
